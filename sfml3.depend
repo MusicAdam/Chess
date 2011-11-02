@@ -120,3 +120,96 @@
 1320245488 source:c:\projects\sfml3\event.cpp
 	"Event.h"
 
+1320270967 source:c:\projects\chess\board.cpp
+	"Board.h"
+	"GamePiece.h"
+	<string>
+
+1320270967 c:\projects\chess\board.h
+	<iostream>
+	<string>
+	"Cell.h"
+	"Rules.h"
+	"ImageHandler.h"
+
+1320270967 c:\projects\chess\cell.h
+	<SFML/Graphics.hpp>
+
+1320270967 c:\projects\chess\rules.h
+	"GamePiece.h"
+
+1320270967 c:\projects\chess\gamepiece.h
+	<SFML/Graphics.hpp>
+	<iostream>
+	"MoveData.h"
+	"Cell.h"
+
+1320270967 c:\projects\chess\movedata.h
+	<SFML/Graphics.hpp>
+	"GamePiece.h"
+
+1320270967 c:\projects\chess\imagehandler.h
+	<string>
+	<SFML/Graphics.hpp>
+	<iostream>
+
+1320270967 source:c:\projects\chess\cell.cpp
+	"Cell.h"
+	<SFML/Graphics.hpp>
+	<iostream>
+
+1320270967 source:c:\projects\chess\event.cpp
+	"Event.h"
+
+1320270967 c:\projects\chess\event.h
+	<iostream>
+	<SFML/Graphics.hpp>
+
+1320270967 source:c:\projects\chess\frame.cpp
+	"Frame.h"
+
+1320270967 c:\projects\chess\frame.h
+
+1320270967 source:c:\projects\chess\gui\component.cpp
+	"Component.h"
+
+1320270967 c:\projects\chess\gui\component.h
+	<SFML/Graphics.hpp>
+	<iostream>
+
+1320270967 source:c:\projects\chess\gui\container.cpp
+	"Container.h"
+
+1320270967 c:\projects\chess\gui\container.h
+	"Component.h"
+
+1320270967 source:c:\projects\chess\gamepiece.cpp
+	"GamePiece.h"
+	"Board.h"
+
+1320270967 source:c:\projects\chess\movedata.cpp
+	"MoveData.h"
+
+1320270967 source:c:\projects\chess\renderhandler.cpp
+	"RenderHandler.h"
+
+1320270967 c:\projects\chess\renderhandler.h
+	"GUI/Component.h"
+
+1320270967 source:c:\projects\chess\rules.cpp
+	"Rules.h"
+
+1320270967 source:c:\projects\chess\main.cpp
+	<SFML/Graphics.hpp>
+	<iostream>
+	"Board.h"
+	"Cell.h"
+	"GamePiece.h"
+	"Chess.h"
+	"RenderHandler.h"
+	"Event.h"
+	"GUI/Component.h"
+	"GUI/Container.h"
+
+1320270967 c:\projects\chess\chess.h
+
