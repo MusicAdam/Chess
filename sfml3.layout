@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
-	<File name="Board.cpp" open="1" top="0" tabpos="3">
+	<File name="Board.cpp" open="0" top="0" tabpos="3">
 		<Cursor position="5429" topLine="0" />
 	</File>
-	<File name="Board.h" open="1" top="0" tabpos="2">
+	<File name="Board.h" open="1" top="0" tabpos="1">
 		<Cursor position="164" topLine="12" />
 	</File>
 	<File name="Cell.cpp" open="0" top="0" tabpos="7">
 		<Cursor position="1757" topLine="0" />
 	</File>
-	<File name="Cell.h" open="1" top="0" tabpos="14">
-		<Cursor position="127" topLine="0" />
+	<File name="Cell.h" open="1" top="0" tabpos="7">
+		<Cursor position="34" topLine="0" />
 	</File>
-	<File name="Event.cpp" open="1" top="0" tabpos="13">
-		<Cursor position="1619" topLine="37" />
+	<File name="Event.cpp" open="0" top="0" tabpos="13">
+		<Cursor position="1619" topLine="59" />
 	</File>
-	<File name="Event.h" open="1" top="0" tabpos="12">
+	<File name="Event.h" open="1" top="0" tabpos="6">
 		<Cursor position="689" topLine="0" />
 	</File>
 	<File name="Frame.cpp" open="0" top="0" tabpos="17">
@@ -25,22 +25,22 @@
 	<File name="Frame.h" open="0" top="0" tabpos="16">
 		<Cursor position="111" topLine="0" />
 	</File>
-	<File name="GUI\Component.cpp" open="1" top="0" tabpos="7">
-		<Cursor position="904" topLine="67" />
+	<File name="GUI\Component.cpp" open="0" top="0" tabpos="7">
+		<Cursor position="1598" topLine="0" />
 	</File>
-	<File name="GUI\Component.h" open="1" top="0" tabpos="6">
-		<Cursor position="369" topLine="0" />
+	<File name="GUI\Component.h" open="1" top="1" tabpos="3">
+		<Cursor position="909" topLine="0" />
 	</File>
-	<File name="GUI\Container.cpp" open="1" top="0" tabpos="9">
+	<File name="GUI\Container.cpp" open="0" top="0" tabpos="9">
 		<Cursor position="113" topLine="0" />
 	</File>
-	<File name="GUI\Container.h" open="1" top="0" tabpos="8">
+	<File name="GUI\Container.h" open="1" top="0" tabpos="4">
 		<Cursor position="103" topLine="0" />
 	</File>
-	<File name="GamePiece.cpp" open="1" top="0" tabpos="5">
+	<File name="GamePiece.cpp" open="0" top="0" tabpos="5">
 		<Cursor position="2391" topLine="31" />
 	</File>
-	<File name="GamePiece.h" open="1" top="0" tabpos="4">
+	<File name="GamePiece.h" open="1" top="0" tabpos="2">
 		<Cursor position="484" topLine="0" />
 	</File>
 	<File name="MoveData.cpp" open="0" top="0" tabpos="11">
@@ -49,16 +49,11 @@
 	<File name="MoveData.h" open="0" top="0" tabpos="10">
 		<Cursor position="180" topLine="0" />
 	</File>
-<<<<<<< HEAD
-	<File name="RenderHandler.cpp" open="1" top="0" tabpos="11">
-		<Cursor position="1172" topLine="7" />
-=======
-	<File name="RenderHandler.cpp" open="1" top="1" tabpos="11">
-		<Cursor position="1477" topLine="42" />
->>>>>>> 9f7c7088c4493e3301686e98a0606d1ec8616708
+	<File name="RenderHandler.cpp" open="0" top="0" tabpos="11">
+		<Cursor position="1630" topLine="21" />
 	</File>
-	<File name="RenderHandler.h" open="1" top="0" tabpos="10">
-		<Cursor position="1471" topLine="16" />
+	<File name="RenderHandler.h" open="1" top="0" tabpos="5">
+		<Cursor position="265" topLine="0" />
 	</File>
 	<File name="Rules.cpp" open="0" top="0" tabpos="9">
 		<Cursor position="437" topLine="0" />
@@ -66,12 +61,7 @@
 	<File name="Rules.h" open="0" top="0" tabpos="8">
 		<Cursor position="91" topLine="0" />
 	</File>
-<<<<<<< HEAD
-	<File name="main.cpp" open="1" top="1" tabpos="1">
-		<Cursor position="764" topLine="21" />
-=======
-	<File name="main.cpp" open="1" top="0" tabpos="1">
-		<Cursor position="1254" topLine="32" />
->>>>>>> 9f7c7088c4493e3301686e98a0606d1ec8616708
+	<File name="main.cpp" open="0" top="0" tabpos="1">
+		<Cursor position="132" topLine="0" />
 	</File>
 </CodeBlocks_layout_file>
