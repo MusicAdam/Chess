@@ -50,7 +50,7 @@
 		<Cursor position="180" topLine="0" />
 	</File>
 	<File name="RenderHandler.cpp" open="1" top="0" tabpos="11">
-		<Cursor position="1437" topLine="24" />
+		<Cursor position="1172" topLine="7" />
 	</File>
 	<File name="RenderHandler.h" open="1" top="0" tabpos="10">
 		<Cursor position="265" topLine="0" />
@@ -62,6 +62,6 @@
 		<Cursor position="91" topLine="0" />
 	</File>
 	<File name="main.cpp" open="1" top="1" tabpos="1">
-		<Cursor position="1023" topLine="15" />
+		<Cursor position="764" topLine="21" />
 	</File>
 </CodeBlocks_layout_file>
