@@ -18,6 +18,12 @@ class RenderHandler
         int addComponent(Component &componentReference, int depth);
         int addComponent(Component &componentReference);
 
+        //Set component by cmpIndex (component index) or by the component itself (sCmp)
+        void setComponentDepth(int cmpIndex, int depth);
+        void setComponentDepth(Component* sCmp, int depth);
+
+        int getMaxDepth();
+
         bool isValid();
 
         void render(sf::RenderWindow& App);
@@ -28,11 +34,16 @@ class RenderHandler
 
         //Returns the last renderObject
         renderObject* scrollRenderObjects(int cur);
+        renderObject* scrollRenderObjects(Component* sCmp);
         renderObject* scrollRenderObjects();
         //Returns the number of objects in the list
         int getRenderListSize();
 
-        int m_maxDepth;         //The total depth (length) of the renderObject list
+        void _setComponentDepth(renderObject* stackPointer, int ndepth);
+        void setDepthHighLow(int nd);
+
+        int m_nextIndex;         //Index of the last element in the stacks
+        int m_depthHigh, m_depthLow;
 };
 
 #endif // RenderHandler
