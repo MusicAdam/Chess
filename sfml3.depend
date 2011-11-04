@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1320266721 source:c:\projects\sfml3\main.cpp
+1320312846 source:c:\projects\sfml3\main.cpp
 	<SFML/Graphics.hpp>
 	<iostream>
 	"Board.h"
@@ -10,6 +10,7 @@
 	"Event.h"
 	"GUI/Component.h"
 	"GUI/Container.h"
+	<cmath>
 
 1319927179 source:c:\projects\sfml3\board.cpp
 	"Board.h"
@@ -83,7 +84,7 @@
 
 1319691770 c:\projects\sfml3\frame.h
 
-1320254988 c:\projects\sfml3\renderhandler.h
+1320304792 c:\projects\sfml3\renderhandler.h
 	"GUI/Component.h"
 
 1320081410 source:c:\projects\sfml3\gui\component.cpp
@@ -105,7 +106,7 @@
 1319859097 c:\projects\sfml3\guihandler.h
 	"GUI/Component.h"
 
-1320266525 source:c:\projects\sfml3\renderhandler.cpp
+1320313274 source:c:\projects\sfml3\renderhandler.cpp
 	"RenderHandler.h"
 
 1320087991 source:c:\projects\sfml3\eventhandler.cpp

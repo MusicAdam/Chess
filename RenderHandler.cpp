@@ -3,7 +3,9 @@
 RenderHandler::RenderHandler()
 {
     head            =   NULL;
-    m_maxDepth      =   0;
+    m_nextIndex     =   0;
+    m_depthHigh     =   0;
+    m_depthLow      =   0;
 }
 
 //Clean up all the allocated memory space
@@ -26,34 +28,71 @@ RenderHandler::~RenderHandler()
 int RenderHandler::addComponent(Component& componentReference, int depth){
     renderObject* renderObjectPointer = new renderObject;
     Component* newComponent =   &componentReference;
+    renderObject* scrollPtr;
+
+    int curDepth=0;
     //Component* newComponent =   dynamic_cast<Component*> (componentReference);
-    int index = 0;
 
-    //Set Depth
-    if(depth == -1){
-        depth = 0;//getMaxDepth();
-    }
 
-    renderObjectPointer->index                  =   index;//getRenderListSize();
+    renderObjectPointer->index                  =   m_nextIndex;//getRenderListSize();
     renderObjectPointer->componentPointer       =   newComponent;
     renderObjectPointer->depth                  =   depth;
     renderObjectPointer->next                   =   NULL;
 
+    setDepthHighLow(depth);
+
+    int currentDepth = m_depthLow;
+
     if(head == NULL){
         head = renderObjectPointer;
     }else{
-        scrollRenderObjects()->next = renderObjectPointer;
+        scrollPtr           = head;
+
+        while(scrollPtr!=NULL){
+           if(scrollPtr->depth != depth && scrollPtr->depth>depth){
+               std::cout << "*!*" <<  scrollPtr << std::endl;
+                break;
+           }
+
+            scrollPtr = scrollPtr->next;
+        }
+
+        std::cout << "***" <<  scrollPtr << std::endl;
+        head->next = scrollPtr;
+        //head->next = scrollPtr;
+/*
+        renderObject* tmp = scrollPtr->next;
+        renderObjectPointer = tmp;
+        scrollPtr->next = renderObjectPointer;*/
     }
 
-    return index;
-}
 
+
+    return m_nextIndex++;
+}
 
 int RenderHandler::addComponent(Component &componentReference)
 {
     int index = addComponent(componentReference, 0);
 
     return index;
+}
+
+int RenderHandler::getMaxDepth(){
+    renderObject* currentPointer;
+    currentPointer = head;
+
+    int maxDepth=0;
+
+    while(currentPointer != NULL){
+        if(currentPointer->depth > maxDepth){
+            maxDepth    =   currentPointer->depth;
+        }
+
+        currentPointer = currentPointer->next;
+    }
+
+    return maxDepth;
 }
 
 //Change this so that the component reports to the handler whether or not it is valid
@@ -83,8 +122,10 @@ void RenderHandler::render(sf::RenderWindow& App){
 
     App.Clear(sf::Color(100, 100, 100));
 
+
     while(currentPointer != NULL){
         if(!currentPointer->componentPointer->isValid()){
+            std::cout << "Depth: " << currentPointer->depth << std::endl;
             currentPointer->componentPointer->draw(App);
             currentPointer = currentPointer->next;
         }
@@ -116,8 +157,48 @@ RenderHandler::renderObject* RenderHandler::scrollRenderObjects(int scrollTo){
     return currentPointer;
 }
 
+RenderHandler::renderObject* RenderHandler::scrollRenderObjects(Component* toCmp){
+    renderObject* currentPointer;
+    currentPointer = head;
+
+    while(currentPointer->next != NULL){
+        std::cout << "Here\n";
+        if(currentPointer->componentPointer == toCmp){
+            return currentPointer;
+        }
+
+        currentPointer = currentPointer->next;
+    }
+
+    std::cout << "****WARNING: scrollRenderObjects(): Requested component was not found, returning last component in list\n";
+
+
+    return currentPointer;
+}
+
 RenderHandler::renderObject* RenderHandler::scrollRenderObjects(){
     return scrollRenderObjects(-1);
 }
-//Returns the number of objects in the list
-int getRenderListSize();
+
+void RenderHandler::_setComponentDepth(renderObject* stackPointer, int ndepth){
+        stackPointer->depth = ndepth;
+}
+
+void RenderHandler::setComponentDepth(int cmpIndex, int depth){
+    renderObject* stackPtr  = scrollRenderObjects(cmpIndex);
+
+    _setComponentDepth(stackPtr, depth);
+}
+void RenderHandler::setComponentDepth(Component* sCmp, int depth){
+    renderObject* stackPtr  = scrollRenderObjects(sCmp);
+
+    _setComponentDepth(stackPtr, depth);
+}
+
+void RenderHandler::setDepthHighLow(int newDepth){
+    if(newDepth > m_depthHigh){
+        m_depthHigh = newDepth;
+    }else if(newDepth < m_depthLow){
+        m_depthLow  =   newDepth;
+    }
+}
