@@ -3,8 +3,9 @@
 
 #include <string>
 
-Board::Board(sf::RenderWindow &App)
+Board::Board(sf::RenderWindow &App, RenderHandler &RenderHandler, Event::Handler &EventHandler)
 {
+    EventHandler.addListener(Event::MOUSE_RELEASE, *this->clickCell);
     cellSize    = 60;
 
     selectedCell.x = 9;
@@ -23,12 +24,12 @@ Board::Board(sf::RenderWindow &App)
     for(int i=0; i<8; i++){
         for(int j=0; j<8; j++){
             cells[i][j].setGridPos(i, j);
-            cells[i][j].setSize(cellSize);
+            cells[i][j].setSize(cellSize, cellSize);
             cells[i][j].SetX(calculateCellPosX(i));
             cells[i][j].SetY(calculateCellPosY(j));
             cells[i][j].setToBoardColor();
 
-            cells[i][j].create();
+            RenderHandler.addComponent(cells[i][j], 3);
         }
     }
 
@@ -153,7 +154,9 @@ void Board::performAction(Cell& clickedCell, GamePiece&  clickedPiece){
 }
 
 //Make attacking possible
-void Board::clickCell(sf::RenderWindow &App, int mouseX, int mouseY){
+//sf::RenderWindow &App, int mouseX, int mouseY
+void Board::clickCell(Event::Data e){
+    /*
     int     clickedCellX    = getCellGridPosX(App,  mouseX,  mouseY);
     int     clickedCellY    = getCellGridPosY(App,  mouseX,  mouseY);
 
@@ -178,6 +181,7 @@ void Board::clickCell(sf::RenderWindow &App, int mouseX, int mouseY){
     }else{ //Offboad click
         std::cout << "Board::clickCell(): Uh-oh, this is wrong. This should not happen. \n";
     }
+    */
 }
 
 void Board::placePiece(int pIndex, int gX, int gY){

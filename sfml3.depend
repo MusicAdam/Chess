@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1320312846 source:c:\projects\sfml3\main.cpp
+1320431151 source:c:\projects\sfml3\main.cpp
 	<SFML/Graphics.hpp>
 	<iostream>
 	"Board.h"
@@ -12,22 +12,25 @@
 	"GUI/Container.h"
 	<cmath>
 
-1319927179 source:c:\projects\sfml3\board.cpp
+1320431094 source:c:\projects\sfml3\board.cpp
 	"Board.h"
 	"GamePiece.h"
 	<string>
 
-1319650087 c:\projects\sfml3\board.h
+1320435821 c:\projects\sfml3\board.h
 	<iostream>
 	<string>
 	"Cell.h"
 	"Rules.h"
 	"ImageHandler.h"
+	"RenderHandler.h"
+	"Event.h"
 
-1319349285 c:\projects\sfml3\cell.h
+1320431194 c:\projects\sfml3\cell.h
 	<SFML/Graphics.hpp>
+	"GUI/Component.h"
 
-1319483721 source:c:\projects\sfml3\cell.cpp
+1320431183 source:c:\projects\sfml3\cell.cpp
 	"Cell.h"
 	<SFML/Graphics.hpp>
 	<iostream>
@@ -84,10 +87,10 @@
 
 1319691770 c:\projects\sfml3\frame.h
 
-1320304792 c:\projects\sfml3\renderhandler.h
+1320434602 c:\projects\sfml3\renderhandler.h
 	"GUI/Component.h"
 
-1320081410 source:c:\projects\sfml3\gui\component.cpp
+1320419311 source:c:\projects\sfml3\gui\component.cpp
 	"Component.h"
 
 1320081258 c:\projects\sfml3\gui\component.h
@@ -106,7 +109,7 @@
 1319859097 c:\projects\sfml3\guihandler.h
 	"GUI/Component.h"
 
-1320313274 source:c:\projects\sfml3\renderhandler.cpp
+1320434974 source:c:\projects\sfml3\renderhandler.cpp
 	"RenderHandler.h"
 
 1320087991 source:c:\projects\sfml3\eventhandler.cpp
@@ -118,7 +121,7 @@
 	<iostream>
 	<SFML/Graphics.hpp>
 
-1320245488 source:c:\projects\sfml3\event.cpp
+1320435529 source:c:\projects\sfml3\event.cpp
 	"Event.h"
 
 1320270967 source:c:\projects\chess\board.cpp

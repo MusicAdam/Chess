@@ -7,6 +7,8 @@
 #include "Cell.h"
 #include "Rules.h"
 #include "ImageHandler.h"
+#include "RenderHandler.h"
+#include "Event.h"
 
 
 class GamePiece;
@@ -24,7 +26,7 @@ class Board
             Attack        //Movement Action:  Action when a cell is attacking.
         };
 
-        Board(sf::RenderWindow &App);
+        Board(sf::RenderWindow &App, RenderHandler &RenderHandler, Event::Handler &EventHandler);
         Cell getCell(int i, int j);
         void clickCell(sf::RenderWindow &App, int mouseX, int mouseY );
         GamePiece getGamePiece(int i);

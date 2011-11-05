@@ -83,6 +83,8 @@ void Event::Handler::call(const int& type, sf::RenderWindow& App){
 void Event::Handler::listen(sf::RenderWindow& App){
     sf::Event Event;
 
+    const sf::Input& Input = App.GetInput();
+
     if((App.GetEvent(Event)) == false) return;
 
     do{

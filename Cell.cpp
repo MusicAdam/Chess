@@ -33,14 +33,6 @@ int Cell::getPieceInCell(){
     return inCell;
 }
 
-void Cell::setSize(int nSize){
-    size = nSize;
-}
-
-int Cell::getSize(){
-    return size;
-}
-
 void Cell::setGridPos(int x, int y){
     gridX = x;
     gridY = y;
@@ -52,23 +44,6 @@ int Cell::getGridX(){
 
 int Cell::getGridY(){
     return gridY;
-}
-
-//Creates the contents of the cell
-void Cell::create(){
-    AddPoint(0, 0, color);
-    AddPoint(size, 0, color);
-    AddPoint(size, size, color);
-    AddPoint(0, size, color);
-}
-
-//Sets the color of a cells
-void Cell::SetColor(sf::Color nColor){
-    color = nColor;
-
-    for(int i=0; i<GetNbPoints(); i++){
-        SetPointColor(i, color);
-    }
 }
 
 void Cell::click(){
@@ -92,15 +67,15 @@ void Cell::click(){
 void Cell::setToBoardColor(){
     if(gridX%2 == 0){
         if(gridY%2 != 0){
-            SetColor( colorWhite);
+            setColor( colorWhite);
         }else{
-            SetColor( colorBlack);
+            setColor( colorBlack);
         }
     }else{
         if(gridY%2 != 0){
-            SetColor( colorBlack);
+            setColor( colorBlack);
         }else{
-            SetColor( colorWhite);
+            setColor( colorWhite);
         }
     }
 }

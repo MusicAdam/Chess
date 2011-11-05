@@ -8,7 +8,8 @@
 class RenderHandler
 {
     public:
-        struct renderObject{Component* componentPointer; int index; int depth; renderObject *next;};
+        struct renderComponents{Component* componentPointer; int index; int depth; renderComponents *next;};
+        struct renderSprites{sf::Sprite* componentPointer; int index; int depth; renderSprites *next;};
 
         RenderHandler();
         ~RenderHandler();
@@ -22,24 +23,28 @@ class RenderHandler
         void setComponentDepth(int cmpIndex, int depth);
         void setComponentDepth(Component* sCmp, int depth);
 
-        int getMaxDepth();
+        //DELETE THIS?
+        int getMaxComponentDepth();
 
         bool isValid();
+        void test();
 
         void render(sf::RenderWindow& App);
     protected:
     private:
 
-        renderObject* head;
+        renderComponents*   cmpHead;
+        renderSprites*      sprHead;
 
         //Returns the last renderObject
-        renderObject* scrollRenderObjects(int cur);
-        renderObject* scrollRenderObjects(Component* sCmp);
-        renderObject* scrollRenderObjects();
+        renderComponents* scrollRenderComponents(Component* sCmp); //Scrolls to component
+        renderComponents* scrollRenderComponents(); //Scrolls components
+        renderComponents* scrollRenderSprites(sf::Sprite* sSpr); //Scrolls Sprites
+        renderComponents* scrollRenderSprites(); //Scrolls to Sprite
         //Returns the number of objects in the list
         int getRenderListSize();
 
-        void _setComponentDepth(renderObject* stackPointer, int ndepth);
+        void _setComponentDepth(renderComponents* stackPointer, int ndepth);
         void setDepthHighLow(int nd);
 
         int m_nextIndex;         //Index of the last element in the stacks

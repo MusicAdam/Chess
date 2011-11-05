@@ -82,12 +82,12 @@ void Component::invalidate(){
     Validates the component
 */
 void Component::validate(){
-    std::cout << "Check component validity....\n";
+   // std::cout << "Check component validity....\n";
     if(!shouldDraw() && !shouldLayout()){
-        std::cout << "Component is valid\n\n";
+        //std::cout << "Component is valid\n\n";
         m_valid = true;
     }else{
-        std::cout << "Component is not valid\n\n";
+     //   std::cout << "Component is not valid\n\n";
     }
 }
 
@@ -113,7 +113,7 @@ void Component::setOutlineColor(sf::Color newColor){m_outlineColor = newColor; i
 sf::Color Component::getOutlineColor(){ return m_outlineColor; }
 
 bool Component::shouldDraw(){
-    std::cout << "\tbool Component::shouldDraw()\n\treturns " << m_shouldDraw << std::endl;
+    //std::cout << "\tbool Component::shouldDraw()\n\treturns " << m_shouldDraw << std::endl;
     return m_shouldDraw;//shouldD;
 }
 

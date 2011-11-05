@@ -31,33 +31,7 @@ int main()
     Event::Handler EventHandler(App.GetInput());
     RenderHandler RenderHandler;
 
-    Component* cmp;
-
-    srand(time(0));
-
-    int numr, numg, numb, rdepth;
-
-    int count=0;
-    float y=0;
-    bool up =true;
-    while(count<20){
-        numr = rand()%255;
-        numg = rand()%255;
-        numb = rand()%255;
-        rdepth = rand()%10;
-        cmp = new Component();
-
-        y = 100+(sin(count)*50);
-        std::cout << "count, y: " << count*10 << ", "<< y << std::endl;
-
-        cmp->SetPosition(count*50, y);
-        cmp->setColor(sf::Color(numr, numb, numg));
-        RenderHandler.addComponent(*cmp, rdepth);
-        //RenderHandler.setComponentDepth(cmp, rdepth);
-        count++;
-    }
-
-    Board gameBoard(App);
+    Board gameBoard(App, RenderHandler, EventHandler);
 
     while (App.IsOpened())
     {

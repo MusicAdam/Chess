@@ -2,7 +2,8 @@
 
 RenderHandler::RenderHandler()
 {
-    head            =   NULL;
+    cmpHead         =   NULL;
+    sprHead         =   NULL;
     m_nextIndex     =   0;
     m_depthHigh     =   0;
     m_depthLow      =   0;
@@ -11,14 +12,17 @@ RenderHandler::RenderHandler()
 //Clean up all the allocated memory space
 RenderHandler::~RenderHandler()
 {
-    renderObject*   currentPointer;
-    renderObject*   tmp_next;
-    currentPointer = head;
 
-    while(currentPointer != NULL){
-        tmp_next        = currentPointer->next;
-        delete [] currentPointer;
-        currentPointer  = tmp_next;
+    //Clean components
+    renderComponents*   componentPtr;
+    renderComponents*   tmp_next;
+
+    componentPtr = cmpHead;
+
+    while(componentPtr != NULL){
+        tmp_next        = componentPtr->next;
+        delete [] componentPtr;
+        componentPtr  = tmp_next;
     }
 
     delete [] tmp_next;
@@ -26,48 +30,68 @@ RenderHandler::~RenderHandler()
 
 
 int RenderHandler::addComponent(Component& componentReference, int depth){
-    renderObject* renderObjectPointer = new renderObject;
+    renderComponents* componentPtr = new renderComponents;
     Component* newComponent =   &componentReference;
-    renderObject* scrollPtr;
+    renderComponents* scrollPtr;
 
-    int curDepth=0;
     //Component* newComponent =   dynamic_cast<Component*> (componentReference);
 
+    //std::cout << "Adding component [" << m_nextIndex << "] at depth " << depth << std::endl;
 
-    renderObjectPointer->index                  =   m_nextIndex;//getRenderListSize();
-    renderObjectPointer->componentPointer       =   newComponent;
-    renderObjectPointer->depth                  =   depth;
-    renderObjectPointer->next                   =   NULL;
+    componentPtr->index                  =   m_nextIndex;//getRenderListSize();
+    componentPtr->componentPointer       =   newComponent;
+    componentPtr->depth                  =   depth;
+    componentPtr->next                   =   NULL;
 
     setDepthHighLow(depth);
 
     int currentDepth = m_depthLow;
 
-    if(head == NULL){
-        head = renderObjectPointer;
+    if(cmpHead== NULL){
+        //std::cout << "head not set... adding component as head\n";
+        cmpHead = componentPtr;
     }else{
-        scrollPtr           = head;
+        scrollPtr           = cmpHead;
+        int mod = 0; //this will be set to one to compensate for < when inserting before head
+        //std::cout << "Scrolling list..\n";
 
-        while(scrollPtr!=NULL){
-           if(scrollPtr->depth != depth && scrollPtr->depth>depth){
-               std::cout << "*!*" <<  scrollPtr << std::endl;
-                break;
-           }
+        if(depth > cmpHead->depth){
+            //std::cout << "Inserting at beginning of list...\nSetting new pointer's next to the list\n";
+            //renderObjectPointer->next = cmpHead ;
+            //std::cout << "Good...\nSetting head to the new structure\n";
+            cmpHead = componentPtr;
+           // std::cout << "Good\n";
+        }else{
+            while(scrollPtr!=NULL){
+                if(scrollPtr->next == NULL){
+                    break;
+                }
 
-            scrollPtr = scrollPtr->next;
+                char append = ((scrollPtr->next->index==cmpHead->index) ? '*' : '\0' );
+
+                //std::cout << "\tDepth check (["<< m_nextIndex << "] < ["<< append << scrollPtr->index<<"]): " << depth << " > " << scrollPtr->next->depth << " ... ";
+                if(depth > (scrollPtr->next->depth)){
+               //    std::cout << "TRUE\n\tExiting...\n";
+                    break;
+               }else{
+             //      std::cout << "FALSE\n";
+               }
+
+                scrollPtr = scrollPtr->next;
+
+            }
+
+            //std::cout << "Setting new pointer's next to the current lists next... " << scrollPtr->next << " ";
+            componentPtr->next = scrollPtr->next;
+            //std::cout << "Good.\nSetting curent lists next to the new pointer... ";
+            scrollPtr->next = componentPtr;
+           // std::cout << "Good\nSetting head to the new structure";
+            //std::cout << "Good\n";
         }
-
-        std::cout << "***" <<  scrollPtr << std::endl;
-        head->next = scrollPtr;
-        //head->next = scrollPtr;
-/*
-        renderObject* tmp = scrollPtr->next;
-        renderObjectPointer = tmp;
-        scrollPtr->next = renderObjectPointer;*/
     }
 
 
-
+    //std::cout << "Component added successfully!\n\n";
     return m_nextIndex++;
 }
 
@@ -78,9 +102,11 @@ int RenderHandler::addComponent(Component &componentReference)
     return index;
 }
 
-int RenderHandler::getMaxDepth(){
-    renderObject* currentPointer;
-    currentPointer = head;
+
+//Should keep?
+int RenderHandler::getMaxComponentDepth(){
+    renderComponents* currentPointer;
+    currentPointer = cmpHead;
 
     int maxDepth=0;
 
@@ -97,8 +123,8 @@ int RenderHandler::getMaxDepth(){
 
 //Change this so that the component reports to the handler whether or not it is valid
 bool RenderHandler::isValid(){
-    renderObject* currentPointer;
-    currentPointer = head;
+    renderComponents* currentPointer;
+    currentPointer = cmpHead;
 
     bool returnValid = true;
 
@@ -117,15 +143,14 @@ bool RenderHandler::isValid(){
 }
 
 void RenderHandler::render(sf::RenderWindow& App){
-    renderObject* currentPointer;
-    currentPointer = head;
+    renderComponents* currentPointer;
+    currentPointer = cmpHead;
 
     App.Clear(sf::Color(100, 100, 100));
 
 
     while(currentPointer != NULL){
         if(!currentPointer->componentPointer->isValid()){
-            std::cout << "Depth: " << currentPointer->depth << std::endl;
             currentPointer->componentPointer->draw(App);
             currentPointer = currentPointer->next;
         }
@@ -138,28 +163,10 @@ void RenderHandler::render(sf::RenderWindow& App){
 //Returns the last !NULL renderObject
 //If scrollTo is set scrollRenderObjects will return the object with the given index
 //WARNING: This will return the last renderObject if the index is not found with no warning!!
-RenderHandler::renderObject* RenderHandler::scrollRenderObjects(int scrollTo){
-    renderObject* currentPointer;
-    currentPointer = head;
 
-    while(currentPointer->next != NULL){
-        if(scrollTo != -1 && scrollTo == currentPointer->index){
-            return currentPointer;
-        }
-
-        currentPointer = currentPointer->next;
-    }
-
-    if(scrollTo != -1){
-        std::cout << "****WARNING: scrollRenderObjects(int "<<scrollTo<<"): Requested index was not found, last element is being returned. This may or may not be the element you were looking for...\n";
-    }
-
-    return currentPointer;
-}
-
-RenderHandler::renderObject* RenderHandler::scrollRenderObjects(Component* toCmp){
-    renderObject* currentPointer;
-    currentPointer = head;
+RenderHandler::renderComponents* RenderHandler::scrollRenderComponents(Component* toCmp){
+    renderComponents* currentPointer;
+    currentPointer = cmpHead;
 
     while(currentPointer->next != NULL){
         std::cout << "Here\n";
@@ -176,21 +183,23 @@ RenderHandler::renderObject* RenderHandler::scrollRenderObjects(Component* toCmp
     return currentPointer;
 }
 
-RenderHandler::renderObject* RenderHandler::scrollRenderObjects(){
-    return scrollRenderObjects(-1);
+RenderHandler::renderComponents* RenderHandler::scrollRenderComponents(){
+    renderComponents* componentPtr;
+    componentPtr = cmpHead;
+
+    while(componentPtr->next != NULL){
+        componentPtr = componentPtr->next;
+    }
+
+    return componentPtr;
 }
 
-void RenderHandler::_setComponentDepth(renderObject* stackPointer, int ndepth){
-        stackPointer->depth = ndepth;
+void RenderHandler::_setComponentDepth(renderComponents* stackPointer, int ndepth){
+    stackPointer->depth = ndepth;
 }
 
-void RenderHandler::setComponentDepth(int cmpIndex, int depth){
-    renderObject* stackPtr  = scrollRenderObjects(cmpIndex);
-
-    _setComponentDepth(stackPtr, depth);
-}
 void RenderHandler::setComponentDepth(Component* sCmp, int depth){
-    renderObject* stackPtr  = scrollRenderObjects(sCmp);
+    renderComponents* stackPtr  = scrollRenderComponents(sCmp);
 
     _setComponentDepth(stackPtr, depth);
 }
@@ -201,4 +210,21 @@ void RenderHandler::setDepthHighLow(int newDepth){
     }else if(newDepth < m_depthLow){
         m_depthLow  =   newDepth;
     }
+}
+
+void RenderHandler::test(){
+    std::cout << "\n\nTESTING LIST INTEGRITY\n\n";
+    std::cout << "\nCurrent m_nextIndex = " << m_nextIndex << std::endl;
+
+    renderComponents* currentPointer;
+    currentPointer =cmpHead;
+
+    std::cout << "Scrolling list:\n";
+    while(currentPointer != NULL){
+        std::cout << "\t[" << currentPointer->index << "]Depth: " << currentPointer->depth << std::endl;
+        std::cout << "\t\tNext = " << currentPointer->next << std::endl;
+        currentPointer = currentPointer->next;
+    }
+
+    std::cout << "\n\nLIST TEST ENDED\n\n";
 }

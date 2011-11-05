@@ -2,15 +2,13 @@
 #define CELL_H
 
 #include <SFML/Graphics.hpp>
+#include "GUI/Component.h"
 
-class Cell: public sf::Shape
+class Cell: public Component
 {
     public:
         Cell();
-        void setSize(int nSize);
-        int getSize();
         void SetColor(sf::Color nColor);
-        void create();
         void setToBoardColor();
         void setGridPos(int x, int y);
         int getGridX();
