@@ -4,8 +4,8 @@
 	<File name="Board.cpp" open="0" top="0" tabpos="3">
 		<Cursor position="5429" topLine="0" />
 	</File>
-	<File name="Board.h" open="1" top="0" tabpos="1">
-		<Cursor position="164" topLine="12" />
+	<File name="Board.h" open="1" top="1" tabpos="1">
+		<Cursor position="197" topLine="12" />
 	</File>
 	<File name="Cell.cpp" open="0" top="0" tabpos="7">
 		<Cursor position="1757" topLine="0" />
@@ -28,8 +28,8 @@
 	<File name="GUI\Component.cpp" open="0" top="0" tabpos="7">
 		<Cursor position="1598" topLine="0" />
 	</File>
-	<File name="GUI\Component.h" open="1" top="1" tabpos="3">
-		<Cursor position="909" topLine="0" />
+	<File name="GUI\Component.h" open="1" top="0" tabpos="3">
+		<Cursor position="587" topLine="0" />
 	</File>
 	<File name="GUI\Container.cpp" open="0" top="0" tabpos="9">
 		<Cursor position="113" topLine="0" />

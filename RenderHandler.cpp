@@ -29,6 +29,7 @@ int RenderHandler::addComponent(Component& componentReference, int depth){
     renderObject* renderObjectPointer = new renderObject;
     Component* newComponent =   &componentReference;
     renderObject* scrollPtr;
+    renderObject* scrollPtr_prev;
 
     int curDepth=0;
     //Component* newComponent =   dynamic_cast<Component*> (componentReference);
@@ -50,15 +51,14 @@ int RenderHandler::addComponent(Component& componentReference, int depth){
 
         while(scrollPtr!=NULL){
            if(scrollPtr->depth != depth && scrollPtr->depth>depth){
-               std::cout << "*!*" <<  scrollPtr << std::endl;
+                scrollPtr_prev = scrollPtr;
                 break;
            }
 
-            scrollPtr = scrollPtr->next;
+           scrollPtr = scrollPtr->next;
         }
 
-        std::cout << "***" <<  scrollPtr << std::endl;
-        head->next = scrollPtr;
+        //head->next = scrollPtr;
         //head->next = scrollPtr;
 /*
         renderObject* tmp = scrollPtr->next;

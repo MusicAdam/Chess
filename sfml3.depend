@@ -191,16 +191,16 @@
 1320270967 source:c:\projects\chess\movedata.cpp
 	"MoveData.h"
 
-1320270967 source:c:\projects\chess\renderhandler.cpp
+1320366223 source:c:\projects\chess\renderhandler.cpp
 	"RenderHandler.h"
 
-1320270967 c:\projects\chess\renderhandler.h
+1320366223 c:\projects\chess\renderhandler.h
 	"GUI/Component.h"
 
 1320270967 source:c:\projects\chess\rules.cpp
 	"Rules.h"
 
-1320270967 source:c:\projects\chess\main.cpp
+1320366223 source:c:\projects\chess\main.cpp
 	<SFML/Graphics.hpp>
 	<iostream>
 	"Board.h"
@@ -211,6 +211,7 @@
 	"Event.h"
 	"GUI/Component.h"
 	"GUI/Container.h"
+	<cmath>
 
 1320270967 c:\projects\chess\chess.h
 
