@@ -26,11 +26,11 @@ Event::Data::callBack Event::Data::getCallback(){
 }
 
 
-Event::Handler::Handler(const sf::Input& input)
+Event::Handler::Handler()
 {
     stackHead = 0;
 
-    m_inputListener   =   &input;
+   // m_inputListener   =   &input;
 }
 
 Event::Handler::~Handler()
@@ -64,7 +64,8 @@ void Event::Handler::addListener(const int& type, Data::callBack functionPtr){
     }
 }
 
-void Event::Handler::call(const int& type, sf::RenderWindow& App){
+void Event::Handler::call(const int& type, sf::RenderWindow& App)
+{
     eventStack* eventPointer;
 
     eventPointer = stackHead;
@@ -73,7 +74,9 @@ void Event::Handler::call(const int& type, sf::RenderWindow& App){
         int checkType = eventPointer->data.type();
 
         if(checkType == type){
-            eventPointer->data.getCallback()(eventPointer->data, App);
+            Event::Data::callBack funcPtr = eventPointer->data.getCallback();
+
+            (*Board::funcPtr)(); //So wrong
         }
 
         eventPointer = eventPointer->next;

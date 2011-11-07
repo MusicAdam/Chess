@@ -3,9 +3,11 @@
 
 #include <string>
 
-Board::Board(sf::RenderWindow &App, RenderHandler &RenderHandler, Event::Handler &EventHandler)
+Board::Board(sf::RenderWindow &App, RenderHandler &RenderHandler)
 {
-    EventHandler.addListener(Event::MOUSE_RELEASE, *this->clickCell);
+    //Event::Data::callBack memPtr = Board::clickCell;
+
+    //EventHandler.addListener(Event::MOUSE_RELEASE, memPtr);
     cellSize    = 60;
 
     selectedCell.x = 9;
@@ -155,7 +157,8 @@ void Board::performAction(Cell& clickedCell, GamePiece&  clickedPiece){
 
 //Make attacking possible
 //sf::RenderWindow &App, int mouseX, int mouseY
-void Board::clickCell(Event::Data e){
+ void Board::clickCell(){ //Event::Data e
+    std::cout << "Hello thoough\n";
     /*
     int     clickedCellX    = getCellGridPosX(App,  mouseX,  mouseY);
     int     clickedCellY    = getCellGridPosY(App,  mouseX,  mouseY);
@@ -182,6 +185,7 @@ void Board::clickCell(Event::Data e){
         std::cout << "Board::clickCell(): Uh-oh, this is wrong. This should not happen. \n";
     }
     */
+    return;
 }
 
 void Board::placePiece(int pIndex, int gX, int gY){

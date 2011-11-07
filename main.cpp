@@ -5,8 +5,8 @@
 #include "GamePiece.h"
 #include "Chess.h"
 
-#include "RenderHandler.h"
 #include "Event.h"
+#include "RenderHandler.h"
 #include "GUI/Component.h"
 #include "GUI/Container.h"
 
@@ -28,11 +28,17 @@ int main()
     // Create the main rendering window
     sf::RenderWindow App(sf::VideoMode::GetMode(3), "Chess - Adam Zielinski"); //sf::Style::Fullscreen
 
-    Event::Handler EventHandler(App.GetInput());
+    Event::Handler EventHandler;
     RenderHandler RenderHandler;
 
-    Board gameBoard(App, RenderHandler, EventHandler);
+    Board gameBoard(App, RenderHandler);
 
+   /* void (Board::*memPtr)();
+    memPtr = &Board::clickCell;
+
+    EventHandler.addListener(Event::MOUSE_RELEASE, memPtr);
+    EventHandler.call(Event::MOUSE_RELEASE, App);
+*/
     while (App.IsOpened())
     {
 

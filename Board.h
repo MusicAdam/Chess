@@ -4,11 +4,12 @@
 #include <iostream>
 #include <string>
 
+#include "Event.h"
 #include "Cell.h"
 #include "Rules.h"
 #include "ImageHandler.h"
 #include "RenderHandler.h"
-#include "Event.h"
+//
 
 
 class GamePiece;
@@ -26,9 +27,11 @@ class Board
             Attack        //Movement Action:  Action when a cell is attacking.
         };
 
-        Board(sf::RenderWindow &App, RenderHandler &RenderHandler, Event::Handler &EventHandler);
+        typedef void (Board::*FuncPtr)();
+
+        Board(sf::RenderWindow &App, RenderHandler &RenderHandler);
         Cell getCell(int i, int j);
-        void clickCell(sf::RenderWindow &App, int mouseX, int mouseY );
+        void clickCell(); //Event::Data e
         GamePiece getGamePiece(int i);
         void createPieces();
         void placePiece(int pIndex, int gX, int gY);

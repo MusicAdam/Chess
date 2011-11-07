@@ -1,45 +1,45 @@
 # depslib dependency file v1.0
-1320431151 source:c:\projects\sfml3\main.cpp
+1320642170 source:c:\projects\sfml3\main.cpp
 	<SFML/Graphics.hpp>
 	<iostream>
 	"Board.h"
 	"Cell.h"
 	"GamePiece.h"
 	"Chess.h"
-	"RenderHandler.h"
 	"Event.h"
+	"RenderHandler.h"
 	"GUI/Component.h"
 	"GUI/Container.h"
 	<cmath>
 
-1320431094 source:c:\projects\sfml3\board.cpp
+1320641677 source:c:\projects\sfml3\board.cpp
 	"Board.h"
 	"GamePiece.h"
 	<string>
 
-1320435821 c:\projects\sfml3\board.h
+1320641663 c:\projects\sfml3\board.h
 	<iostream>
 	<string>
+	"Event.h"
 	"Cell.h"
 	"Rules.h"
 	"ImageHandler.h"
 	"RenderHandler.h"
-	"Event.h"
 
-1320431194 c:\projects\sfml3\cell.h
+1320427594 c:\projects\sfml3\cell.h
 	<SFML/Graphics.hpp>
 	"GUI/Component.h"
 
-1320431183 source:c:\projects\sfml3\cell.cpp
+1320427583 source:c:\projects\sfml3\cell.cpp
 	"Cell.h"
 	<SFML/Graphics.hpp>
 	<iostream>
 
-1319844823 source:c:\projects\sfml3\gamepiece.cpp
+1319841223 source:c:\projects\sfml3\gamepiece.cpp
 	"GamePiece.h"
 	"Board.h"
 
-1319484703 c:\projects\sfml3\gamepiece.h
+1319481103 c:\projects\sfml3\gamepiece.h
 	<SFML/Graphics.hpp>
 	<iostream>
 	"MoveData.h"
@@ -48,27 +48,27 @@
 1318992978 source:c:\projects\sfml3\imagehandler.cpp
 	"ImageHandler.h"
 
-1318992983 c:\projects\sfml3\imagehandler.h
+1318989383 c:\projects\sfml3\imagehandler.h
 	<string>
 	<SFML/Graphics.hpp>
 	<iostream>
 
-1319142874 source:c:\projects\sfml3\rules.cpp
+1319139274 source:c:\projects\sfml3\rules.cpp
 	"Rules.h"
 
-1319126161 c:\projects\sfml3\rules.h
+1319122561 c:\projects\sfml3\rules.h
 	"GamePiece.h"
 
 1319039779 c:\projects\sfml3\player.h
 
-1319691390 c:\projects\sfml3\movedata.h
+1319687790 c:\projects\sfml3\movedata.h
 	<SFML/Graphics.hpp>
 	"GamePiece.h"
 
-1319481055 source:c:\projects\sfml3\movedata.cpp
+1319477455 source:c:\projects\sfml3\movedata.cpp
 	"MoveData.h"
 
-1319262156 c:\projects\sfml3\chess.h
+1319258556 c:\projects\sfml3\chess.h
 
 1319350044 c:\projects\sfml3\board.cpp
 	"Board.h"
@@ -82,25 +82,25 @@
 	<SFML/Graphics.hpp>
 	<iostream>
 
-1319691830 source:c:\projects\sfml3\frame.cpp
+1319688230 source:c:\projects\sfml3\frame.cpp
 	"Frame.h"
 
-1319691770 c:\projects\sfml3\frame.h
+1319688170 c:\projects\sfml3\frame.h
 
-1320434602 c:\projects\sfml3\renderhandler.h
+1320431002 c:\projects\sfml3\renderhandler.h
 	"GUI/Component.h"
 
-1320419311 source:c:\projects\sfml3\gui\component.cpp
+1320415711 source:c:\projects\sfml3\gui\component.cpp
 	"Component.h"
 
-1320081258 c:\projects\sfml3\gui\component.h
+1320077658 c:\projects\sfml3\gui\component.h
 	<SFML/Graphics.hpp>
 	<iostream>
 
-1319760941 source:c:\projects\sfml3\gui\container.cpp
+1319757341 source:c:\projects\sfml3\gui\container.cpp
 	"Container.h"
 
-1319760745 c:\projects\sfml3\gui\container.h
+1319757145 c:\projects\sfml3\gui\container.h
 	"Component.h"
 
 1319927586 source:c:\projects\sfml3\guihandler.cpp
@@ -109,7 +109,7 @@
 1319859097 c:\projects\sfml3\guihandler.h
 	"GUI/Component.h"
 
-1320434974 source:c:\projects\sfml3\renderhandler.cpp
+1320642238 source:c:\projects\sfml3\renderhandler.cpp
 	"RenderHandler.h"
 
 1320087991 source:c:\projects\sfml3\eventhandler.cpp
@@ -117,11 +117,12 @@
 
 1320088138 c:\projects\sfml3\eventhandler.h
 
-1320245429 c:\projects\sfml3\event.h
+1320642446 c:\projects\sfml3\event.h
 	<iostream>
 	<SFML/Graphics.hpp>
+	"Board.h"
 
-1320435529 source:c:\projects\sfml3\event.cpp
+1320548547 source:c:\projects\sfml3\event.cpp
 	"Event.h"
 
 1320270967 source:c:\projects\chess\board.cpp

@@ -1,8 +1,11 @@
 #ifndef EVENT_H
-#define EVENT_h
+#define EVENT_H
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include "Board.h"
+
+class Board;
 
 namespace Event {
 const int MOUSE_RELEASE  =   0;
@@ -11,7 +14,7 @@ const int MOUSE_MOVE     =   1;
 class Data
 {
     public:
-        typedef void (*callBack)(Data, sf::RenderWindow&);
+        typedef void (Board::*callBack)();
 
         Data();
         virtual ~Data();
@@ -22,7 +25,7 @@ class Data
         int setType(const int& type);
     protected:
         int m_type;
-        int m_callback;
+        callBack m_callback;
     private:
 
 };
@@ -30,10 +33,10 @@ class Data
 class Handler
 {
     public:
-        Handler(const sf::Input& input);
+        Handler();
         virtual ~Handler();
 
-        void addListener(const int& type, Data::callBack);
+        void addListener(const int& type, Data::callBack f);
         void call(const int& type, sf::RenderWindow& App);
         //CAUTION: This function is called an undefined number of times while the app is open, keep its functionality light!!
         void listen(sf::RenderWindow& App);

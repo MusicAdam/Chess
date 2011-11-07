@@ -43,16 +43,13 @@ int RenderHandler::addComponent(Component& componentReference, int depth){
     componentPtr->depth                  =   depth;
     componentPtr->next                   =   NULL;
 
-    setDepthHighLow(depth);
-
-    int currentDepth = m_depthLow;
+   // setDepthHighLow(depth);
 
     if(cmpHead== NULL){
         //std::cout << "head not set... adding component as head\n";
         cmpHead = componentPtr;
     }else{
         scrollPtr           = cmpHead;
-        int mod = 0; //this will be set to one to compensate for < when inserting before head
         //std::cout << "Scrolling list..\n";
 
         if(depth > cmpHead->depth){
@@ -67,9 +64,6 @@ int RenderHandler::addComponent(Component& componentReference, int depth){
                     break;
                 }
 
-                char append = ((scrollPtr->next->index==cmpHead->index) ? '*' : '\0' );
-
-                //std::cout << "\tDepth check (["<< m_nextIndex << "] < ["<< append << scrollPtr->index<<"]): " << depth << " > " << scrollPtr->next->depth << " ... ";
                 if(depth > (scrollPtr->next->depth)){
                //    std::cout << "TRUE\n\tExiting...\n";
                     break;
