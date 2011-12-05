@@ -1,57 +1,57 @@
 # depslib dependency file v1.0
-1320642170 source:c:\projects\sfml3\main.cpp
+1322849669 source:c:\projects\sfml3\main.cpp
 	<SFML/Graphics.hpp>
 	<iostream>
-	"Board.h"
-	"Cell.h"
-	"GamePiece.h"
-	"Chess.h"
-	"Event.h"
 	"RenderHandler.h"
-	"GUI/Component.h"
-	"GUI/Container.h"
-	<cmath>
+	"Event.h"
+	"Board.h"
+	"Player.h"
 
-1320641677 source:c:\projects\sfml3\board.cpp
+1322858815 source:c:\projects\sfml3\board.cpp
 	"Board.h"
 	"GamePiece.h"
+	"RenderHandler.h"
+	"Player.h"
+	"AI.h"
 	<string>
 
-1320641663 c:\projects\sfml3\board.h
+1322854775 c:\projects\sfml3\board.h
 	<iostream>
 	<string>
 	"Event.h"
 	"Cell.h"
 	"Rules.h"
-	"ImageHandler.h"
 	"RenderHandler.h"
+	"TileMap.h"
 
-1320427594 c:\projects\sfml3\cell.h
+1322857639 c:\projects\sfml3\cell.h
 	<SFML/Graphics.hpp>
 	"GUI/Component.h"
 
-1320427583 source:c:\projects\sfml3\cell.cpp
+1322858001 source:c:\projects\sfml3\cell.cpp
 	"Cell.h"
-	<SFML/Graphics.hpp>
-	<iostream>
-
-1319841223 source:c:\projects\sfml3\gamepiece.cpp
-	"GamePiece.h"
-	"Board.h"
-
-1319481103 c:\projects\sfml3\gamepiece.h
 	<SFML/Graphics.hpp>
 	<iostream>
 	"MoveData.h"
-	"Cell.h"
 
-1318992978 source:c:\projects\sfml3\imagehandler.cpp
-	"ImageHandler.h"
+1322857307 source:c:\projects\sfml3\gamepiece.cpp
+	"GamePiece.h"
+	"Board.h"
 
-1318989383 c:\projects\sfml3\imagehandler.h
-	<string>
+1322857264 c:\projects\sfml3\gamepiece.h
 	<SFML/Graphics.hpp>
 	<iostream>
+	<vector>
+	"MoveData.h"
+	"Player.h"
+	"Cell.h"
+
+1321162256 source:c:\projects\sfml3\imagehandler.cpp
+	"ImageHandler.h"
+
+1321161334 c:\projects\sfml3\imagehandler.h
+	<iostream>
+	<SFML/graphics.hpp>
 
 1319139274 source:c:\projects\sfml3\rules.cpp
 	"Rules.h"
@@ -59,16 +59,27 @@
 1319122561 c:\projects\sfml3\rules.h
 	"GamePiece.h"
 
-1319039779 c:\projects\sfml3\player.h
+1321561631 c:\projects\sfml3\player.h
+	<iostream>
 
-1319687790 c:\projects\sfml3\movedata.h
+1322337007 c:\projects\sfml3\movedata.h
 	<SFML/Graphics.hpp>
-	"GamePiece.h"
+	<vector>
+	<iostream>
 
-1319477455 source:c:\projects\sfml3\movedata.cpp
+1322336848 source:c:\projects\sfml3\movedata.cpp
 	"MoveData.h"
+	"GamePiece.h"
+	"Cell.h"
+	"GamePiece.h"
+	"Board.h"
+	<string>
 
-1319258556 c:\projects\sfml3\chess.h
+1321298079 c:\projects\sfml3\chess.h
+	<SFML/Graphics.hpp>
+	"RenderHandler.h"
+	"Board.h"
+	"Event.h"
 
 1319350044 c:\projects\sfml3\board.cpp
 	"Board.h"
@@ -87,13 +98,14 @@
 
 1319688170 c:\projects\sfml3\frame.h
 
-1320431002 c:\projects\sfml3\renderhandler.h
-	"GUI/Component.h"
+1321369824 c:\projects\sfml3\renderhandler.h
+	<SFML/Graphics.hpp>
 
-1320415711 source:c:\projects\sfml3\gui\component.cpp
+1321331871 source:c:\projects\sfml3\gui\component.cpp
 	"Component.h"
+	"../RenderHandler.h"
 
-1320077658 c:\projects\sfml3\gui\component.h
+1321476107 c:\projects\sfml3\gui\component.h
 	<SFML/Graphics.hpp>
 	<iostream>
 
@@ -109,21 +121,24 @@
 1319859097 c:\projects\sfml3\guihandler.h
 	"GUI/Component.h"
 
-1320642238 source:c:\projects\sfml3\renderhandler.cpp
+1321588914 source:c:\projects\sfml3\renderhandler.cpp
 	"RenderHandler.h"
+	"GUI/Component.h"
 
 1320087991 source:c:\projects\sfml3\eventhandler.cpp
 	"EventHandler.h"
 
 1320088138 c:\projects\sfml3\eventhandler.h
 
-1320642446 c:\projects\sfml3\event.h
+1321302951 c:\projects\sfml3\event.h
 	<iostream>
 	<SFML/Graphics.hpp>
 	"Board.h"
 
-1320548547 source:c:\projects\sfml3\event.cpp
+1322849850 source:c:\projects\sfml3\event.cpp
 	"Event.h"
+	"RenderHandler.h"
+	"AI.h"
 
 1320270967 source:c:\projects\chess\board.cpp
 	"Board.h"
@@ -195,16 +210,16 @@
 1320270967 source:c:\projects\chess\movedata.cpp
 	"MoveData.h"
 
-1320270967 source:c:\projects\chess\renderhandler.cpp
+1320366223 source:c:\projects\chess\renderhandler.cpp
 	"RenderHandler.h"
 
-1320270967 c:\projects\chess\renderhandler.h
+1320366223 c:\projects\chess\renderhandler.h
 	"GUI/Component.h"
 
 1320270967 source:c:\projects\chess\rules.cpp
 	"Rules.h"
 
-1320270967 source:c:\projects\chess\main.cpp
+1320366223 source:c:\projects\chess\main.cpp
 	<SFML/Graphics.hpp>
 	<iostream>
 	"Board.h"
@@ -215,6 +230,91 @@
 	"Event.h"
 	"GUI/Component.h"
 	"GUI/Container.h"
+	<cmath>
 
 1320270967 c:\projects\chess\chess.h
+
+1320694982 source:c:\projects\sfml3\gui\sprite.cpp
+	"Sprite.h"
+
+1320694982 c:\projects\sfml3\gui\sprite.h
+
+1321370236 source:c:\projects\sfml3\debug.cpp
+	"Debug.h"
+
+1321370010 c:\projects\sfml3\debug.h
+	<iostream>
+
+1321585997 source:c:\projects\sfml3\player.cpp
+	"Player.h"
+	"Board.h"
+
+1322088866 source:c:\projects\sfml3\ai.cpp
+	"AI.h"
+	"Board.h"
+	"GamePiece.h"
+	"MoveData.h"
+	"AIMove.h"
+
+1322089158 c:\projects\sfml3\ai.h
+	<iostream>
+	<vector>
+	<map >
+
+1321409531 source:c:\projects\sfml3\gui\text.cpp
+	"Text.h"
+
+1321409988 c:\projects\sfml3\gui\text.h
+	"Component.h"
+
+1321514202 source:c:\projects\sfml3\chessexception.cpp
+	"ChessException.h"
+
+1321507550 c:\projects\sfml3\chessexception.h
+
+1321425325 source:c:\projects\sfml3\movevector.cpp
+
+1321468479 source:c:\projects\sfml3\vectorlist.cpp
+	"VectorList.h"
+	"MoveVector.h"
+
+1321424896 c:\projects\sfml3\vectorlist.h
+
+1321468480 c:\projects\sfml3\movevector.h
+
+1321565792 source:c:\projects\sfml3\moveflags.cpp
+	"MoveFlags.h"
+
+1321565833 c:\projects\sfml3\moveflags.h
+
+1321752713 source:c:\projects\sfml3\movelist.cpp
+	"MoveList.h"
+	"MoveData.h"
+
+1321752704 c:\projects\sfml3\movelist.h
+	<iostream>
+	<vector>
+
+1322255826 c:\projects\sfml3\aimove.h
+	<vector>
+	"MoveData.h"
+
+1322336858 source:c:\projects\sfml3\aimove.cpp
+	"AIMove.h"
+
+1322336155 source:c:\projects\sfml3\movemodel.cpp
+	"MoveModel.h"
+
+1322336397 c:\projects\sfml3\movemodel.h
+
+1322858209 source:c:\projects\sfml3\tilemap.cpp
+	"TileMap.h"
+	"Board.h"
+	"RenderHandler.h"
+	"Cell.h"
+
+1322858104 c:\projects\sfml3\tilemap.h
+	<SFML/Graphics.hpp>
+	<map>
+	<string>
 

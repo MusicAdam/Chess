@@ -14,18 +14,22 @@ const int MOUSE_MOVE     =   1;
 class Data
 {
     public:
-        typedef void (Board::*callBack)();
+        //typedef void (Board::*callBack)();
+
 
         Data();
         virtual ~Data();
 
         int type();
-        void setCallback(callBack functionPtr);
-        callBack getCallback();
+        //template<class cbType>
+        //void setCallback(Event::callBack<cbType, Data> functionPtr);
+        //template<class cbType>
+       // Event::callBack<cbType, Data> getCallback();
         int setType(const int& type);
     protected:
         int m_type;
-        callBack m_callback;
+      //  template<class cbType>
+       // Event::callBack<cbType, Data> m_callback();
     private:
 
 };
@@ -36,10 +40,10 @@ class Handler
         Handler();
         virtual ~Handler();
 
-        void addListener(const int& type, Data::callBack f);
+       // void addListener(const int& type, Data::callBack f);
         void call(const int& type, sf::RenderWindow& App);
         //CAUTION: This function is called an undefined number of times while the app is open, keep its functionality light!!
-        void listen(sf::RenderWindow& App);
+        void listen();
     protected:
     private:
         struct eventStack {Event::Data data; eventStack* next;};
@@ -50,6 +54,5 @@ class Handler
 
 
 };//Namespace
-
 
 #endif // EVENT_H

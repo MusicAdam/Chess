@@ -2,7 +2,7 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="sfml3" />
+		<Option title="Chess" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
@@ -36,26 +36,51 @@
 			<Add option="-Wall" />
 			<Add option="-fpermissive" />
 		</Compiler>
+		<Unit filename="AI.cpp" />
+		<Unit filename="AI.h" />
+		<Unit filename="AIMove.cpp" />
+		<Unit filename="AIMove.h" />
 		<Unit filename="Board.cpp" />
 		<Unit filename="Board.h" />
 		<Unit filename="Cell.cpp" />
 		<Unit filename="Cell.h" />
+		<Unit filename="Chess.h" />
+		<Unit filename="ChessException.cpp" />
+		<Unit filename="ChessException.h" />
+		<Unit filename="Debug.cpp" />
+		<Unit filename="Debug.h" />
 		<Unit filename="Event.cpp" />
 		<Unit filename="Event.h" />
-		<Unit filename="Frame.cpp" />
-		<Unit filename="Frame.h" />
 		<Unit filename="GUI\Component.cpp" />
 		<Unit filename="GUI\Component.h" />
 		<Unit filename="GUI\Container.cpp" />
 		<Unit filename="GUI\Container.h" />
+		<Unit filename="GUI\Sprite.cpp" />
+		<Unit filename="GUI\Sprite.h" />
+		<Unit filename="GUI\Text.cpp" />
+		<Unit filename="GUI\Text.h" />
 		<Unit filename="GamePiece.cpp" />
 		<Unit filename="GamePiece.h" />
+		<Unit filename="ImageHandler.cpp" />
+		<Unit filename="ImageHandler.h" />
 		<Unit filename="MoveData.cpp" />
 		<Unit filename="MoveData.h" />
+		<Unit filename="MoveFlags.cpp" />
+		<Unit filename="MoveFlags.h" />
+		<Unit filename="MoveModel.cpp" />
+		<Unit filename="MoveModel.h" />
+		<Unit filename="MoveVector.cpp" />
+		<Unit filename="MoveVector.h" />
+		<Unit filename="Player.cpp" />
+		<Unit filename="Player.h" />
 		<Unit filename="RenderHandler.cpp" />
 		<Unit filename="RenderHandler.h" />
 		<Unit filename="Rules.cpp" />
 		<Unit filename="Rules.h" />
+		<Unit filename="TileMap.cpp" />
+		<Unit filename="TileMap.h" />
+		<Unit filename="VectorList.cpp" />
+		<Unit filename="VectorList.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />

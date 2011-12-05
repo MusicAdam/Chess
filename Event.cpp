@@ -1,4 +1,6 @@
 #include "Event.h"
+#include "RenderHandler.h"
+#include "AI.h"
 
 Event::Data::Data()
 {
@@ -8,7 +10,7 @@ Event::Data::~Data()
 {
     //dtor
 }
-
+/*
 int Event::Data::setType(const int& type){
     m_type = type;
 }
@@ -25,7 +27,7 @@ Event::Data::callBack Event::Data::getCallback(){
     return m_callback;
 }
 
-
+*/
 Event::Handler::Handler()
 {
     stackHead = 0;
@@ -37,7 +39,7 @@ Event::Handler::~Handler()
 {
     //dtor
 }
-
+/*
 void Event::Handler::addListener(const int& type, Data::callBack functionPtr){
     Event::Data newData;
 
@@ -63,55 +65,75 @@ void Event::Handler::addListener(const int& type, Data::callBack functionPtr){
         eventPointer->next = newEvent;
     }
 }
-
+*/
 void Event::Handler::call(const int& type, sf::RenderWindow& App)
 {
     eventStack* eventPointer;
 
     eventPointer = stackHead;
-
+    /*
     while(eventPointer != NULL){
         int checkType = eventPointer->data.type();
 
         if(checkType == type){
-            Event::Data::callBack funcPtr = eventPointer->data.getCallback();
+            //Event::Data::callBack funcPtr = eventPointer->data.getCallback();
 
-            (*Board::funcPtr)(); //So wrong
+            //(*Board::funcPtr)(); //So wrong
         }
 
         eventPointer = eventPointer->next;
-    }
+    }*/
 }
 
-void Event::Handler::listen(sf::RenderWindow& App){
+void Event::Handler::listen(){
     sf::Event Event;
+    sf::RenderWindow* Window = RenderHandler::Window();
+    Board* Board = Board::Get();
 
-    const sf::Input& Input = App.GetInput();
+    const sf::Input& Input = Window->GetInput();
 
-    if((App.GetEvent(Event)) == false) return;
+    if((Window->GetEvent(Event)) == false) return;
 
     do{
-        if((Event.Type == sf::Event::KeyReleased) && (Event.Key.Code == sf::Key::Escape)){
-            App.Close();
+        if(Event.Type == sf::Event::KeyReleased){
+            if(Event.Key.Code == sf::Key::Escape){
+                Window->Close();
+            }
+
+            if(Event.Key.Code == sf::Key::Space){
+                if(Board->getState() == Board::STATE_NULL){
+                    //Let the board know we want it to load now..
+                    Board->setState(Board::STATE_LOADING);
+                }else if(Board->getState() == Board::STATE_PLAY){
+                    Board->spacePressed();
+                }
+            }
+
+            if(Event.Key.Code == sf::Key::X){
+                if(Board->getState() == Board::STATE_PLAY){
+                    //Let the board know we want it to load now..
+                    Board->setState(Board::STATE_EXIT);
+                }
+            }
         }
 
         // Close window : exit)
         if (Event.Type == sf::Event::Closed){
-            App.Close();
+            Window->Close();
         }
 
-         if((Event.Type == sf::Event::MouseButtonReleased)){
-            call(Event::MOUSE_RELEASE, App);
-            /*if((Input.GetMouseX() >= gameBoard.X) && (Input.GetMouseY() >= gameBoard.Y) && (Input.GetMouseX() <= gameBoard.X+gameBoard.width) && (Input.GetMouseY() <= gameBoard.Y+gameBoard.height)  ){
-                int mouseX = Input.GetMouseX();
-                int mouseY = Input.GetMouseY();
+        if((Event.Type == sf::Event::MouseButtonReleased)){
+            if(Board->getState() == Board::STATE_PLAY){
+                if(Event.MouseButton.Button == sf::Mouse::Left){
+                    Board->Click(sf::Vector2f(Input.GetMouseX(), Input.GetMouseY()));
+                }
 
-                gameBoard.clickCell(App, mouseX, mouseY);
-            }else{
-                gameBoard.deselect();
-            }*/
+                if(Event.MouseButton.Button == sf::Mouse::Right){
+                    Board->outputClickData(Input.GetMouseX(), Input.GetMouseY());
+                }
+            }
         }
 
 
-    }while(App.GetEvent(Event));
+    }while(Window->GetEvent(Event));
 }

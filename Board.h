@@ -7,85 +7,77 @@
 #include "Event.h"
 #include "Cell.h"
 #include "Rules.h"
-#include "ImageHandler.h"
 #include "RenderHandler.h"
-//
-
+#include "TileMap.h"
 
 class GamePiece;
 
-class Board
+class Board : public TileMap
 {
     public:
 
-        enum Movement {
+        enum {
             /*
-                MOVEMENT ACTIONS
-                    The movement actions that can be performed by pieces
+                NIL - Game not loaded AKA player is still in main menu
+                LOADING - Game is loading resources (images for sprites, creating the game board etc.)
+                PLAY - Game is running
+                STATE_TURN - Turns are switching
+                PAUSE - Game is paused (player is in a menu)
+                EXIT - Game is exiting and resources are being unloaded
+
             */
-            Move,       //Movement Action:  The standard cell to cell movement.
-            Attack        //Movement Action:  Action when a cell is attacking.
+
+            STATE_NULL,
+            STATE_LOADING,
+            STATE_PLAY,
+            STATE_TURN,
+            STATE_PAUSE,
+            STATE_EXIT
         };
 
-        typedef void (Board::*FuncPtr)();
+        struct Exception{
+            const int Move  =   0;
+        };
 
-        Board(sf::RenderWindow &App, RenderHandler &RenderHandler);
-        Cell getCell(int i, int j);
-        void clickCell(); //Event::Data e
+        ~Board();
+
+
+        bool Click(sf::Vector2f mCoord);
         GamePiece getGamePiece(int i);
-        void createPieces();
-        void placePiece(int pIndex, int gX, int gY);
-        int getSelectedCell();
-        float calculateCellPosX(int gridX);
+
+        void placePieceInCell(int index, sf::Vector2i cell);
+        void removePieceFromCell(sf::Vector2i cell);
+
         bool canMovePiece(int pieceIndex, int clickedCellX, int clickedCellY, int moveType); //0 is movement, 1 is attack
         void jumpWithSelectedPiece(int x, int y);
         void selectCell(int x, int y);
 
-        /*
-            //If selected cell is set
-        */
-        bool cellIsSelected();
-
-        /*
-            //If specefied cell is selected
-        */
-        bool cellIsSelected(int x, int y);
-
-        /*
-            Calculate the x position of the cell relative to the window
-        */
-        float calculateCellPosY(int gridY);
-
-
-        /*
-            Gets the center of a cell relative to the window
-        */
-        const sf::Vector2f getCellCenter(int cellX, int cellY);
-
-        /*
-            Gets the cell position in pixels relative to the window
-        */
-        const sf::Vector2f calculateCellPos(int gridX, int gridY);
-
-        /*
-            Validates the board
-        */
-        void validate();
-
-        /*
-            Returns true when the board is valid (has been drawn)
-        */
-        bool isValid();
-
-        /*
-            Toggles selected cell the erases the selection
-            INVALIDATES BOARD
-        */
-        void deselect();
+        void setState(const int nstate);
+        const int getState();
 
         void moveSelectedPieceTo(int x, int y);
 
-        void performAction(Cell& clickedCell, GamePiece&  clickedPiece);
+        void performAction(Cell& clickedCell);
+
+        int ActivePlayer();
+
+        //Loads the board
+        bool load();
+
+        void think();
+
+        bool IsLoaded();
+
+void outputClickData(int mouseX, int mouseY);
+
+        void spacePressed();
+        void highlightCell(int x, int y, bool moveType);
+        void hideCellHighlight(int x, int y);
+
+        void killPiece(int index);
+
+        static Board* Get(bool init);
+        static Board* Get();
 
         float X;
         float Y;
@@ -93,19 +85,32 @@ class Board
         int width;
         sf::Vector2i selectedCell;
     protected:
+        Board();
     private:
-        int getCellGridPosX(sf::RenderWindow &App, int mouseX, int mouseY);
-        int getCellGridPosY(sf::RenderWindow &App, int mouseX, int mouseY);
 
-        int cellSize;
-        Cell cells[8][8];
-        Cell nullCell;  //Used for selection when no other cell is selected
+        static Board* BoardPtr;
+
+        //Removes all pieces and cells
+        //void unload();
+        //Deletes the board
+        void exit();
+        //Initialize the pieces array
+        void createPieces();
+        //Initialize cells array
+        //void createCells();
+        void turn();
+
         GamePiece pieces[32];
         float screenWidth ;
         float screenHeight;
-        void invalidate();
+        int m_selectedPiece;
+        int m_clickedPiece;
+        int m_state;
+        int m_activePlayer; //The player id whose turn it is
+        int m_actionPerformed; //True if an action was performed on this turn
 
-        bool valid;
+        //Loading flags
+        bool m_isLoaded; //True when all of the Board's resources and data have been loaded
 };
 
 #endif // BOARD_H

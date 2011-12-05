@@ -11,7 +11,7 @@ class Component: public sf::Shape
         Component();
         virtual ~Component();
 
-        void draw(sf::RenderWindow& Chess);
+        void draw();
 
         void setSize(float w, float h);
         void setSize(sf::Vector2f size);
@@ -25,9 +25,9 @@ class Component: public sf::Shape
         void performLayout();
 
         bool isValid();
+        void invalidate();
     protected:
         void validate();
-        void invalidate();
 
         bool shouldDraw();
         bool shouldLayout();

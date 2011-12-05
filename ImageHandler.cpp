@@ -1,20 +1,22 @@
 #include "ImageHandler.h"
-
+/*
 ImageHandler::ImageHandler()
 {
-
+    m_loaded=false;
 }
 
-void ImageHandler::addImage(int index, std::string file){
+ImageHandler::~ImageHandler()
+{
+    //dtor
+}
 
-    sf::Image image;
+void ImageHandler::loadImages(){
+    if(m_loaded) return;
 
-    if (image.LoadFromFile(file))
-    {
-        images[index] = image;
+    if(!Pawn.LoadFromFile("pawn.png")){
+        std::cout << "NO U FACK\n";
     }
-}
 
-sf::Image ImageHandler::getImage(int index){
-    return images[index];
+    m_loaded = true;
 }
+*/

@@ -1,4 +1,5 @@
 #include "Component.h"
+#include "../RenderHandler.h"
 
 Component::Component()
 {
@@ -45,14 +46,14 @@ void Component::performLayout(){
     public draw()
     Draws things to screen
 */
-void Component::draw(sf::RenderWindow& Chess){
-    if(shouldDraw()){
-        Chess.Draw(*this);
+void Component::draw(){
+    //if(shouldDraw()){ //Apparently SFML doesn't support the redrawing of individual elemtns and i "[should not] worry about that" (http://www.sfml-dev.org/forum/viewtopic.php?p=41329#41329)
+        RenderHandler::Window()->Draw(*this);
         m_shouldDraw = false;
 
         //Attempt to validate:
         validate();
-    }
+   // }
 }
 
 
@@ -75,6 +76,8 @@ void Component::invalidate(){
     m_valid                 = false;
 
     performLayout();
+
+    RenderHandler::Get()->invalidate();
 }
 
 /*
@@ -86,6 +89,7 @@ void Component::validate(){
     if(!shouldDraw() && !shouldLayout()){
         //std::cout << "Component is valid\n\n";
         m_valid = true;
+        RenderHandler::Get()->validate();
     }else{
      //   std::cout << "Component is not valid\n\n";
     }
