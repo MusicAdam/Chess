@@ -2,8 +2,16 @@
 #define CHESSEXCEPTION_H
 
 
-namespace err{
-    const int PATH      =   0; //A PATH_ error has occured attempting to find path between two cells.
-}
+struct ChessException{
+    enum _type{
+        /***ChessPiece Exceptions***/
+        NullPiece,
+        NullPath
+    } PieceEnum;
+
+    _type       type;
+    std::string what;
+    std::string why;
+};
 
 #endif // CHESSEXCEPTION_H

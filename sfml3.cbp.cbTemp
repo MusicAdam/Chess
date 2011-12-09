@@ -42,6 +42,7 @@
 		<Unit filename="AIMove.h" />
 		<Unit filename="Board.cpp" />
 		<Unit filename="Board.h" />
+		<Unit filename="Chess.h" />
 		<Unit filename="ChessException.cpp" />
 		<Unit filename="ChessException.h" />
 		<Unit filename="Debug.cpp" />
@@ -60,16 +61,24 @@
 		<Unit filename="ImageHandler.h" />
 		<Unit filename="MoveData.cpp" />
 		<Unit filename="MoveData.h" />
+		<Unit filename="MoveFlags.cpp" />
+		<Unit filename="MoveFlags.h" />
+		<Unit filename="MoveModel.cpp" />
+		<Unit filename="MoveModel.h" />
+		<Unit filename="MoveVector.h" />
 		<Unit filename="Piece.cpp" />
 		<Unit filename="Piece.h" />
 		<Unit filename="Player.cpp" />
 		<Unit filename="Player.h" />
 		<Unit filename="RenderHandler.cpp" />
 		<Unit filename="RenderHandler.h" />
+		<Unit filename="Rules.cpp" />
+		<Unit filename="Rules.h" />
 		<Unit filename="Square.cpp" />
 		<Unit filename="State.h" />
 		<Unit filename="TileMap.cpp" />
 		<Unit filename="TileMap.h" />
+		<Unit filename="VectorList.cpp" />
 		<Unit filename="VectorList.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>

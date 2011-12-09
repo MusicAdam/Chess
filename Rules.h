@@ -1,7 +1,7 @@
 #ifndef RULES_H
 #define RULES_H
 
-#include "GamePiece.h"
+#include "Piece.h"
 
 class Rules
 {

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
-	<File name="AI.cpp" open="0" top="0" tabpos="3">
-		<Cursor position="1186" topLine="22" />
+	<File name="AI.cpp" open="1" top="0" tabpos="14">
+		<Cursor position="1243" topLine="22" />
 	</File>
 	<File name="AI.h" open="0" top="0" tabpos="2">
 		<Cursor position="84" topLine="0" />
@@ -13,23 +13,14 @@
 	<File name="AIMove.h" open="0" top="0" tabpos="4">
 		<Cursor position="1534" topLine="0" />
 	</File>
-	<File name="Board.cpp" open="1" top="1" tabpos="3">
-		<Cursor position="915" topLine="4" />
+	<File name="Board.cpp" open="1" top="0" tabpos="3">
+		<Cursor position="2051" topLine="30" />
 	</File>
 	<File name="Board.h" open="1" top="0" tabpos="2">
-		<Cursor position="2472" topLine="60" />
+		<Cursor position="1102" topLine="9" />
 	</File>
-	<File name="Cell.cpp" open="1" top="0" tabpos="8">
-		<Cursor position="772" topLine="14" />
-	</File>
-	<File name="Cell.h" open="1" top="0" tabpos="7">
-		<Cursor position="1023" topLine="0" />
-	</File>
-	<File name="Chess.h" open="0" top="0" tabpos="17">
-		<Cursor position="162" topLine="0" />
-	</File>
-	<File name="ChessException.h" open="0" top="0" tabpos="12">
-		<Cursor position="101" topLine="0" />
+	<File name="ChessException.h" open="1" top="0" tabpos="6">
+		<Cursor position="94" topLine="0" />
 	</File>
 	<File name="Debug.cpp" open="0" top="0" tabpos="19">
 		<Cursor position="292" topLine="0" />
@@ -37,64 +28,58 @@
 	<File name="Debug.h" open="0" top="0" tabpos="18">
 		<Cursor position="126" topLine="0" />
 	</File>
-	<File name="Event.cpp" open="1" top="0" tabpos="6">
-		<Cursor position="3117" topLine="81" />
+	<File name="Event.cpp" open="0" top="0" tabpos="6">
+		<Cursor position="2298" topLine="84" />
 	</File>
 	<File name="Event.h" open="0" top="0" tabpos="6">
 		<Cursor position="1092" topLine="4" />
 	</File>
-	<File name="GUI\Component.cpp" open="1" top="0" tabpos="11">
-		<Cursor position="1001" topLine="0" />
+	<File name="GUI\Component.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="1821" topLine="10" />
 	</File>
-	<File name="GUI\Component.h" open="0" top="0" tabpos="17">
-		<Cursor position="617" topLine="0" />
-	</File>
-	<File name="GamePiece.cpp" open="1" top="0" tabpos="10">
-		<Cursor position="10937" topLine="30" />
-	</File>
-	<File name="GamePiece.h" open="1" top="0" tabpos="9">
-		<Cursor position="175" topLine="0" />
+	<File name="GUI\Component.h" open="0" top="0" tabpos="2">
+		<Cursor position="379" topLine="0" />
 	</File>
 	<File name="ImageHandler.h" open="0" top="0" tabpos="15">
 		<Cursor position="377" topLine="0" />
 	</File>
-	<File name="MoveData.cpp" open="0" top="0" tabpos="11">
-		<Cursor position="490" topLine="0" />
+	<File name="MoveData.cpp" open="1" top="0" tabpos="5">
+		<Cursor position="8988" topLine="326" />
 	</File>
-	<File name="MoveData.h" open="0" top="0" tabpos="10">
-		<Cursor position="277" topLine="24" />
+	<File name="MoveData.h" open="1" top="0" tabpos="4">
+		<Cursor position="1069" topLine="14" />
 	</File>
-	<File name="MoveFlags.cpp" open="0" top="0" tabpos="18">
-		<Cursor position="113" topLine="0" />
+	<File name="Piece.cpp" open="1" top="0" tabpos="13">
+		<Cursor position="1478" topLine="37" />
 	</File>
-	<File name="MoveVector.h" open="0" top="0" tabpos="12">
-		<Cursor position="44" topLine="0" />
+	<File name="Piece.h" open="1" top="0" tabpos="12">
+		<Cursor position="1470" topLine="31" />
 	</File>
-	<File name="Player.cpp" open="0" top="0" tabpos="19">
-		<Cursor position="672" topLine="0" />
+	<File name="Player.cpp" open="1" top="0" tabpos="11">
+		<Cursor position="698" topLine="45" />
 	</File>
-	<File name="Player.h" open="0" top="0" tabpos="18">
-		<Cursor position="611" topLine="0" />
+	<File name="Player.h" open="1" top="0" tabpos="10">
+		<Cursor position="432" topLine="0" />
 	</File>
-	<File name="RenderHandler.cpp" open="0" top="0" tabpos="17">
-		<Cursor position="4197" topLine="130" />
+	<File name="RenderHandler.cpp" open="1" top="0" tabpos="18">
+		<Cursor position="8510" topLine="184" />
 	</File>
-	<File name="RenderHandler.h" open="0" top="0" tabpos="16">
-		<Cursor position="1551" topLine="11" />
+	<File name="RenderHandler.h" open="1" top="0" tabpos="17">
+		<Cursor position="757" topLine="0" />
 	</File>
-	<File name="Rules.cpp" open="0" top="0" tabpos="12">
-		<Cursor position="439" topLine="0" />
+	<File name="Square.cpp" open="1" top="0" tabpos="8">
+		<Cursor position="981" topLine="87" />
 	</File>
-	<File name="TileMap.cpp" open="1" top="0" tabpos="5">
-		<Cursor position="3699" topLine="23" />
+	<File name="State.h" open="1" top="0" tabpos="9">
+		<Cursor position="236" topLine="0" />
 	</File>
-	<File name="TileMap.h" open="1" top="0" tabpos="4">
-		<Cursor position="1416" topLine="41" />
+	<File name="TileMap.cpp" open="1" top="0" tabpos="16">
+		<Cursor position="2345" topLine="53" />
 	</File>
-	<File name="VectorList.cpp" open="0" top="0" tabpos="13">
-		<Cursor position="48" topLine="0" />
+	<File name="TileMap.h" open="1" top="0" tabpos="15">
+		<Cursor position="242" topLine="1" />
 	</File>
 	<File name="main.cpp" open="1" top="0" tabpos="1">
-		<Cursor position="541" topLine="0" />
+		<Cursor position="851" topLine="0" />
 	</File>
 </CodeBlocks_layout_file>

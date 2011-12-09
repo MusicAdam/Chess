@@ -7,13 +7,13 @@
 
 using std::map;
 
-class Cell;
+class Square;
 
 class TileMap
 {
     public:
         struct TMapException{
-            static const int NULL_CELL = 0;
+            static const int NULL_SQUARE = 0;
             static const int NO_SELECTION = 1;
 
             sf::Vector2i c;
@@ -22,12 +22,12 @@ class TileMap
         };
 
         /** Default constructor */
-        TileMap(int size, int cellSize);
+        TileMap(int size, int SquareSize);
         /** Default destructor */
         virtual ~TileMap();
 
         /*********************************************************
-                "Load cells into the map"
+                "Load Squares into the map"
         *********************************************************/
         void load(void);
         void unload();
@@ -38,28 +38,28 @@ class TileMap
         int MapSize();
 
         /*********************************************************
-            "Gets a cell inside the map"
+            "Gets a Square inside the map"
 
-            returns a reference to the Cell
+            returns a reference to the Square
 
             PARAMS: coords -    an sf::Vector2i that hold the grid x
-                                and grid y of the cell to get
+                                and grid y of the Square to get
 
-            throws a NULL_CELL exception if the cell doesn't exist
+            throws a NULL_Square exception if the Square doesn't exist
         ***********************************************************/
-        Cell& GetCell(sf::Vector2i coords) throw(TMapException);
+        Square* GetSquare(sf::Vector2i coords) throw(TMapException);
 
         /*********************************************************
-            "Calculates the pixel position of a cell relative to
+            "Calculates the pixel position of a Square relative to
                 the window given the grid coordinates"
 
             returns an sf::Vector2f with pixel coordinates
 
             PARAMS: coords -    an sf::Vector2i that hold the grid x
-                                and grid y of the cell to get
+                                and grid y of the Square to get
 
         ***********************************************************/
-        sf::Vector2f getCellPosition(sf::Vector2i coords);
+        sf::Vector2f getSquarePosition(sf::Vector2i coords);
 
         /********************
             Checks if a grid position
@@ -75,20 +75,20 @@ class TileMap
         void Select(sf::Vector2i c);
         void Deselect()throw();
 
-        Cell& GetSelection() throw(TMapException);
+        Square* GetSelection() throw(TMapException);
 
         sf::Vector2i GetGridFromPixel(sf::Vector2f coord);
 
         void SetPosition(float x, float y);
     protected:
     private:
-        int m_cellCount;
-        int m_cellSize;
+        int m_SquareCount;
+        int m_SquareSize;
         int m_size;
         sf::Vector2i m_clickCoord;
 
         float m_x, m_y;
-        map<int, map<int, Cell> > cells;
+        map<int, map<int, Square*> > Squares;
 };
 
 #endif // TILEMAP_H

@@ -1,5 +1,5 @@
 #include "Board.h"
-#include "GamePiece.h"
+#include "Piece.h"
 #include "RenderHandler.h"
 #include "Player.h"
 #include "AI.h"
@@ -29,7 +29,7 @@ bool Board::load(){
 
     TileMap::load();
 
-//    createCells();
+//    createSquares();
     createPieces();
 
     m_isLoaded = true;
@@ -42,85 +42,141 @@ bool Board::IsLoaded(){
 }
 
 
-GamePiece Board::getGamePiece(int i) {
-    return pieces[i];
+Piece* Board::GetPiece(int i) {
+    return &pieces[i];
 }
 
 int Board::ActivePlayer(){
     return m_activePlayer;
 }
 
-void Board::performAction(Cell& clickedCell){
-    /*Cell&       c_selectedCell    =     cells[selectedCell.x][selectedCell.y];
-    GamePiece&  selectedPiece     =     pieces[c_selectedCell.getPieceInCell()];
+void Board::Deselect(){
+    TileMap::Deselect();
 
-    if(!Player::Active()->ownsPiece(selectedPiece.index)){
+    m_selectedPiece = NULL;
+}
+
+void Board::DebugClick(sf::Vector2f mCoord){
+    try{
+        Square* clickedSquare = GetSquare(GetGridFromPixel(mCoord));
+
+        std::cout << "********************************\n";
+        std::cout << "************Click Data**********\n";
+        std::cout << "Square:\t\t" << clickedSquare->gridPos.x << ", " << clickedSquare->gridPos.y << std::endl;
+        if(clickedSquare->Occupied()){
+            std::cout << "Occupied:\t" << clickedSquare->GetPiece()->index << std::endl;
+        }else{
+            std::cout << "Occupied:\tfalse\n";
+        }
+
+        if(GetPiece(clickedSquare->GetPiece()->index)->GetSquare() == NULL){
+            std::cout << "Piece points to cell: NULL\n";
+        }else{
+            Square* sq = GetPiece(clickedSquare->GetPiece()->index)->GetSquare();
+            std::cout << "Piece points to cell: " << sq->gridPos.x << ", " << sq->gridPos.y << std::endl;
+        }
+    }
+    catch(ChessException e){
+        std::cout << e.why << "\n";
+    }
+    catch(TMapException e){
+        std::cout << e.why << "\n";
+    }
+}
+
+void Board::DebugPreviousSelection(sf::Vector2f mCoord){
+    if(m_selectedPiece == NULL){
+        std::cout << "m_selectedPiece = NULL\n";
+    }else{
+        std::cout << "m_selectedPiece = ("<< m_selectedPiece->GetPos().x << ", "<< m_selectedPiece->GetPos().y <<")\n";
+    }
+}
+
+void Board::performAction(Square* clickedSquare){
+    if(!Player::Active()->OwnsPiece(m_selectedPiece->index)){
         std::cout << "Active player (" << Player::Active()->id() << ") does not own this piece!";
 
         return;
     }
 
-    std::cout << "\n**Generating MoveData based on click information...\n";
-
-    //Organize out movement data
-    MoveData MoveData(selectedPiece);
-    MoveData.fromCell = sf::Vector2i(selectedCell.x, selectedCell.y);
-    MoveData.toCell =   sf::Vector2i(clickedCell.getGridX(), clickedCell.getGridY());
+    /*** GENERATING MOVE DATA **/
+    MoveData MoveData(*m_selectedPiece);
+    MoveData.fromSquare = sf::Vector2i(m_selectedPiece->GetPos().x, m_selectedPiece->GetPos().y);
+    MoveData.toSquare =   sf::Vector2i(clickedSquare->gridPos.x, clickedSquare->gridPos.y);
     MoveData.outputDebugMessages = true;
 
-    if(selectedPiece.Move(MoveData)){ //Attempt to move the piece
+    if(m_selectedPiece->Move(MoveData)){ //Attempt to move the piece
         m_actionPerformed = true;
     }else{
         std::cout << "MOVE IS NOT POSSIBLE\n";
-    }*/
-}
-
-void Board::killPiece(int index){
-    pieces[index].kill();
+    }
 }
 
 //Make attacking possible
 //
 bool Board::Click(sf::Vector2f mCoord){ //Event::Data e
-    TileMap::Click(mCoord);
+    //Now there may be Squares selected.
+    bool canPerformAction = true;
+    Square* selectedSquare = NULL;
+    Square* clickedSquare  = NULL;
 
-    //Now there may be cells selected.
     try{
-        Cell clickedCell = GetSelection();
+        selectedSquare  = GetSelection();
+        clickedSquare   = GetSquare(GetGridFromPixel(mCoord));
 
-       // if()
+        canPerformAction = true;
     }
 
     catch(TMapException e){
-        std::cout << e.why << std::endl;
+        std::cout << "Board::Click():> Cannot perform action: " << e.why << std::endl;
+        canPerformAction = false;
     }
-}
 
-void Board::removePieceFromCell(sf::Vector2i cell){
-    /*if(cells[cell.x][cell.y].occupied){
-        int index   =   cells[cell.x][cell.y].getPieceInCell();
+    if(canPerformAction){
+        //Switch selection
+        if(clickedSquare->Occupied() && Player::Active()->OwnsPiece(clickedSquare->GetPiece())){
+            TileMap::Click(mCoord);
+            m_selectedPiece = clickedSquare->GetPiece();
+        }else{ //Perform action
+            performAction(clickedSquare);
+        }
+    }else{
+        //try to make a selection
+        try{
+            Square* clickedSquare = GetSquare(GetGridFromPixel(mCoord));
 
-        cells[cell.x][cell.y].removePiece();
+            if(clickedSquare->Occupied()){
+                if(Player::Active()->OwnsPiece(clickedSquare->GetPiece())){
+                    TileMap::Click(mCoord);
 
-        //Move to somewhere evenyually..
-        pieces[index].SetPosition(0, 0);
-        pieces[index].setGridPos(9, 9);
-    }*/
+                    m_selectedPiece = clickedSquare->GetPiece();
+                }else{
+                    std::cout << "Board::Click():> Cannot select square: This piece does not belong to you!" << std::endl;
+                }
+            }else{
+                std::cout << "Board::Click():> Cannot select square: This square has no piece in it!" << std::endl;
+            }
+        }
+
+        catch(TMapException e){
+            std::cout << "Board::Click():> Cannot select square: " << e.why << std::endl;
+        }
+    }
+
+
 }
 
 void Board::createPieces(){
-    Rules rules;
-
-    int numPawns    = rules.placement(GamePiece::Pawn);
-    int numRooks    = rules.placement(GamePiece::Rook);
-    int numKnights  = rules.placement(GamePiece::Knight);
-    int numBishops  = rules.placement(GamePiece::Bishop);
+    int numPawns    = 8;
+    int numRooks    = 2;
+    int numKnights  = 2;
+    int numBishops  = 2;
     int total = 0;
 
     //Create Player 1 Pawns
     for(int p1PawnCount = 0; p1PawnCount<numPawns; p1PawnCount++){
         pieces[p1PawnCount].index = p1PawnCount;
-        pieces[p1PawnCount].setType(GamePiece::Pawn);
+        pieces[p1PawnCount].setType(Piece::Pawn);
         pieces[p1PawnCount].setOwner(1);
         pieces[p1PawnCount].setGridPos(sf::Vector2i(p1PawnCount, 6));
     }
@@ -131,7 +187,7 @@ void Board::createPieces(){
     for(int p2pawnCount = 0; p2pawnCount<numPawns; p2pawnCount++){
         int index = p2pawnCount+total;
         pieces[index].index = index;
-        pieces[index].setType(GamePiece::Pawn);
+        pieces[index].setType(Piece::Pawn);
         pieces[index].setOwner(2);
         pieces[index].setGridPos(sf::Vector2i(p2pawnCount, 1));
     }
@@ -147,7 +203,7 @@ void Board::createPieces(){
         if(p1rookCount == 1){
             xPos = 7;
         }
-        pieces[index].setType(GamePiece::Rook);
+        pieces[index].setType(Piece::Rook);
         pieces[index].setOwner(1);
         pieces[index].setGridPos(sf::Vector2i(xPos, 7));
     }
@@ -163,7 +219,7 @@ void Board::createPieces(){
         if(p2rookCount == 1){
             xPos = 7;
         }
-        pieces[index].setType(GamePiece::Rook);
+        pieces[index].setType(Piece::Rook);
         pieces[index].setOwner(2);
         pieces[index].setGridPos(sf::Vector2i(xPos, 0));
 
@@ -181,7 +237,7 @@ void Board::createPieces(){
         if(p1knightCount == 1){
             xPos = 6;
         }
-        pieces[index].setType(GamePiece::Knight);
+        pieces[index].setType(Piece::Knight);
         pieces[index].setOwner(1);
         pieces[index].setGridPos(sf::Vector2i(xPos, 7));
     }
@@ -197,7 +253,7 @@ void Board::createPieces(){
         if(p2knightCount == 1){
             xPos = 6;
         }
-        pieces[index].setType(GamePiece::Knight);
+        pieces[index].setType(Piece::Knight);
         pieces[index].setOwner(2);
         pieces[index].setGridPos(sf::Vector2i(xPos, 0));
     }
@@ -213,7 +269,7 @@ void Board::createPieces(){
         if(p1bishopCount == 1){
             xPos = 5;
         }
-        pieces[index].setType(GamePiece::Bishop);
+        pieces[index].setType(Piece::Bishop);
         pieces[index].setOwner(1);
         pieces[index].setGridPos(sf::Vector2i(xPos, 7));
     }
@@ -229,7 +285,7 @@ void Board::createPieces(){
             xPos = 5;
         }
         pieces[index].index = index;
-        pieces[index].setType(GamePiece::Bishop);
+        pieces[index].setType(Piece::Bishop);
         pieces[index].setOwner(2);
         pieces[index].setGridPos(sf::Vector2i(xPos, 0));
     }
@@ -238,7 +294,7 @@ void Board::createPieces(){
 
     //p1 queen
     pieces[total].index = total;
-    pieces[total].setType(GamePiece::Queen);
+    pieces[total].setType(Piece::Queen);
     pieces[total].setOwner(1);
     pieces[total].setGridPos(sf::Vector2i(4, 7));
 
@@ -246,7 +302,7 @@ void Board::createPieces(){
 
     //p2 queen
     pieces[total].index = total;
-    pieces[total].setType(GamePiece::Queen);
+    pieces[total].setType(Piece::Queen);
     pieces[total].setOwner(2);
     pieces[total].setGridPos(sf::Vector2i(4, 0)) ;
 
@@ -254,7 +310,7 @@ void Board::createPieces(){
 
     //p1 king
     pieces[total].index = total;
-    pieces[total].setType(GamePiece::King);
+    pieces[total].setType(Piece::King);
     pieces[total].setOwner(1);
     pieces[total].setGridPos(sf::Vector2i(3, 7));
 
@@ -262,7 +318,7 @@ void Board::createPieces(){
 
     //p2 king
     pieces[total].index = total;
-    pieces[total].setType(GamePiece::King);
+    pieces[total].setType(Piece::King);
     pieces[total].setOwner(2);
     pieces[total].setGridPos(sf::Vector2i(3, 0));
 
@@ -271,35 +327,6 @@ void Board::createPieces(){
     }
 }
 
-/*void Board::createCells(){
-    cellSize    = 60;
-
-    selectedCell.x = 9;
-    selectedCell.y = 9;
-
-    width = cellSize*8;
-    height = cellSize*8;
-
-    screenWidth = RenderHandler::Window()->GetWidth();
-    screenHeight = RenderHandler::Window()->GetHeight();
-
-    X = (screenWidth/2)-(width/2);
-    Y = (screenHeight/2)-(height/2);
-
-    //Set up cell array
-    for(int i=0; i<8; i++){
-        for(int j=0; j<8; j++){
-            cells[i][j].setGridPos(i, j);
-            cells[i][j].setSize(cellSize, cellSize);
-            cells[i][j].SetX(calculateCellPosX(i));
-            cells[i][j].SetY(calculateCellPosY(j));
-            cells[i][j].setToBoardColor();
-
-            RenderHandler::Get()->addComponent(cells[i][j], 3);
-        }
-    }
-}
-*/
 void Board::setState(const int nstate){
     m_state =   nstate;
     switch(nstate){
@@ -329,7 +356,6 @@ const int Board::getState(){
 
 Board* Board::Get(bool init){
     if(BoardPtr == NULL && init){
-        std::cout << "INIT\n";
         BoardPtr = new Board();
     }
 
@@ -339,26 +365,21 @@ Board* Board::Get(bool init){
 Board* Board::Get(){
     return Get(true);
 }
-/*
+
 void Board::unload(){
     RenderHandler* RenderHandler = RenderHandler::Get();
 
     for(int pindex=0; pindex<32; pindex++){
         RenderHandler->removeComponent(&pieces[pindex]);
-        pieces[pindex].~GamePiece();
+        pieces[pindex].~Piece();
     }
 
-    for(int x=0; x<8; x++){
-        for(int y=0; y<8; y++){
-           RenderHandler->removeComponent(&cells[x][y]);
-           cells[x][y].~Cell();
-        }
-    }
-}*/
+    TileMap::unload();
+}
 
 //End the current player's turn
 void Board::turn(){
-    deselect();
+    Deselect();
 
     if(m_activePlayer == NULL){
         m_activePlayer = 1;
@@ -416,7 +437,8 @@ void Board::think(){
             }
 
             if(m_actionPerformed){
-                deselect();
+                Deselect();
+                m_selectedPiece = NULL;
                 m_actionPerformed = false;
 
                 turn();
@@ -448,18 +470,10 @@ void Board::spacePressed(){
     m_actionPerformed = true;
 }
 
-void Board::highlightCell(int x, int y, bool moveType){
-   // cells[x][y].highlightOn(moveType);
+void Board::highlightSquare(int x, int y, bool moveType){
+   // Squares[x][y].highlightOn(moveType);
 }
 
-void Board::hideCellHighlight(int x, int y){
-   // cells[x][y].highlightOff();
-}
-
-bool Board::cellIsInBounds(sf::Vector2i coord){
-    if(coord.x < 0 || coord.x > 7 || coord.y < 0 || coord.y > 7){
-        return false;
-    }
-
-    return true;
+void Board::hideSquareHighlight(int x, int y){
+   // Squares[x][y].highlightOff();
 }

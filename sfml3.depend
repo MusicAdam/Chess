@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1322849669 source:c:\projects\sfml3\main.cpp
+1323395421 source:c:\projects\sfml3\main.cpp
 	<SFML/Graphics.hpp>
 	<iostream>
 	"RenderHandler.h"
@@ -7,38 +7,40 @@
 	"Board.h"
 	"Player.h"
 
-1322858815 source:c:\projects\sfml3\board.cpp
+1323396583 source:c:\projects\sfml3\board.cpp
 	"Board.h"
-	"GamePiece.h"
+	"Piece.h"
 	"RenderHandler.h"
 	"Player.h"
 	"AI.h"
 	<string>
 
-1322854775 c:\projects\sfml3\board.h
+1323382531 c:\projects\sfml3\board.h
 	<iostream>
 	<string>
 	"Event.h"
-	"Cell.h"
+	"Square.h"
 	"Rules.h"
 	"RenderHandler.h"
 	"TileMap.h"
 
-1322857639 c:\projects\sfml3\cell.h
+1323316184 c:\projects\sfml3\cell.h
 	<SFML/Graphics.hpp>
 	"GUI/Component.h"
+	"ChessException.h"
 
-1322858001 source:c:\projects\sfml3\cell.cpp
+1323142018 source:c:\projects\sfml3\cell.cpp
 	"Cell.h"
 	<SFML/Graphics.hpp>
 	<iostream>
+	"Board.h"
 	"MoveData.h"
 
-1322857307 source:c:\projects\sfml3\gamepiece.cpp
+1323142065 source:c:\projects\sfml3\gamepiece.cpp
 	"GamePiece.h"
 	"Board.h"
 
-1322857264 c:\projects\sfml3\gamepiece.h
+1323315463 c:\projects\sfml3\gamepiece.h
 	<SFML/Graphics.hpp>
 	<iostream>
 	<vector>
@@ -56,23 +58,22 @@
 1319139274 source:c:\projects\sfml3\rules.cpp
 	"Rules.h"
 
-1319122561 c:\projects\sfml3\rules.h
-	"GamePiece.h"
+1323319042 c:\projects\sfml3\rules.h
+	"Piece.h"
 
-1321561631 c:\projects\sfml3\player.h
+1323374112 c:\projects\sfml3\player.h
 	<iostream>
 
-1322337007 c:\projects\sfml3\movedata.h
+1323371613 c:\projects\sfml3\movedata.h
 	<SFML/Graphics.hpp>
 	<vector>
 	<iostream>
 
-1322336848 source:c:\projects\sfml3\movedata.cpp
+1323374506 source:c:\projects\sfml3\movedata.cpp
 	"MoveData.h"
-	"GamePiece.h"
-	"Cell.h"
-	"GamePiece.h"
 	"Board.h"
+	"Square.h"
+	"Piece.h"
 	<string>
 
 1321298079 c:\projects\sfml3\chess.h
@@ -98,16 +99,17 @@
 
 1319688170 c:\projects\sfml3\frame.h
 
-1321369824 c:\projects\sfml3\renderhandler.h
+1323384074 c:\projects\sfml3\renderhandler.h
 	<SFML/Graphics.hpp>
 
-1321331871 source:c:\projects\sfml3\gui\component.cpp
+1323384143 source:c:\projects\sfml3\gui\component.cpp
 	"Component.h"
 	"../RenderHandler.h"
 
-1321476107 c:\projects\sfml3\gui\component.h
+1323371517 c:\projects\sfml3\gui\component.h
 	<SFML/Graphics.hpp>
 	<iostream>
+	"../State.h"
 
 1319757341 source:c:\projects\sfml3\gui\container.cpp
 	"Container.h"
@@ -135,7 +137,7 @@
 	<SFML/Graphics.hpp>
 	"Board.h"
 
-1322849850 source:c:\projects\sfml3\event.cpp
+1323117897 source:c:\projects\sfml3\event.cpp
 	"Event.h"
 	"RenderHandler.h"
 	"AI.h"
@@ -245,14 +247,15 @@
 1321370010 c:\projects\sfml3\debug.h
 	<iostream>
 
-1321585997 source:c:\projects\sfml3\player.cpp
+1323381812 source:c:\projects\sfml3\player.cpp
 	"Player.h"
 	"Board.h"
+	"Piece.h"
 
-1322088866 source:c:\projects\sfml3\ai.cpp
+1323375057 source:c:\projects\sfml3\ai.cpp
 	"AI.h"
 	"Board.h"
-	"GamePiece.h"
+	"Piece.h"
 	"MoveData.h"
 	"AIMove.h"
 
@@ -267,10 +270,9 @@
 1321409988 c:\projects\sfml3\gui\text.h
 	"Component.h"
 
-1321514202 source:c:\projects\sfml3\chessexception.cpp
-	"ChessException.h"
+1323316135 source:c:\projects\sfml3\chessexception.cpp
 
-1321507550 c:\projects\sfml3\chessexception.h
+1323396197 c:\projects\sfml3\chessexception.h
 
 1321425325 source:c:\projects\sfml3\movevector.cpp
 
@@ -307,14 +309,44 @@
 
 1322336397 c:\projects\sfml3\movemodel.h
 
-1322858209 source:c:\projects\sfml3\tilemap.cpp
+1323381717 source:c:\projects\sfml3\tilemap.cpp
 	"TileMap.h"
 	"Board.h"
 	"RenderHandler.h"
-	"Cell.h"
+	"Square.h"
+	<sstream>
 
-1322858104 c:\projects\sfml3\tilemap.h
+1323396502 c:\projects\sfml3\tilemap.h
 	<SFML/Graphics.hpp>
 	<map>
 	<string>
+
+1323396325 c:\projects\sfml3\square.h
+	<SFML/Graphics.hpp>
+	"GUI/Component.h"
+	"ChessException.h"
+	"MoveData.h"
+
+1323395911 c:\projects\sfml3\piece.h
+	<SFML/Graphics.hpp>
+	<iostream>
+	<vector>
+	"MoveData.h"
+	"Player.h"
+
+1323395323 c:\projects\sfml3\state.h
+	<string>
+
+1323395928 source:c:\projects\sfml3\piece.cpp
+	"Piece.h"
+	"Board.h"
+	"Square.h"
+
+1323396300 source:c:\projects\sfml3\square.cpp
+	"Square.h"
+	<SFML/Graphics.hpp>
+	<iostream>
+	"Board.h"
+	"MoveData.h"
+	"Piece.h"
 

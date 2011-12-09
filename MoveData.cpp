@@ -1,12 +1,11 @@
 #include "MoveData.h"
-#include "GamePiece.h"
-#include "Cell.h"
-#include "GamePiece.h"
 #include "Board.h"
+#include "Square.h"
+#include "Piece.h"
 #include <string>
 
 MoveData::MoveData(){}
-MoveData::MoveData(GamePiece& Piece)
+MoveData::MoveData(Piece& Piece)
 {
     pieceType       =   Piece.getType();
     pieceIndex      =   Piece.index;
@@ -22,42 +21,42 @@ MoveData::MoveData(GamePiece& Piece)
     forward         = Piece.Owner()->forward();  //Which direction is forward
     orientation     = sf::Vector2i(NIL, NIL);
 
-    fromCell        = sf::Vector2i(NIL, NIL);
-    toCell          = sf::Vector2i(NIL, NIL);
+    fromSquare        = sf::Vector2i(NIL, NIL);
+    toSquare          = sf::Vector2i(NIL, NIL);
 
     distance        = sf::Vector2i(-1, -1);
     direction       = NIL;
 
     outputDebugMessages = false;
     switch(pieceType){
-        case GamePiece::Pawn:
+        case Piece::Pawn:
             addFlag(Perpendicular);
             onlyForward = true;
             range.y      =   1;
             break;
-        case GamePiece::King:
+        case Piece::King:
             addFlag(Diagonal);
             addFlag(Perpendicular);
             range.x = 1;
             range.y = 1;
             break;
-        case GamePiece::Rook:
+        case Piece::Rook:
             addFlag(Perpendicular);
             range.x      =   -1;
             range.y      =   -1;
             break;
-        case GamePiece::Bishop:
+        case Piece::Bishop:
             addFlag(Diagonal);
             range.x      =   -1;
             range.y      =   -1;
             break;
-        case GamePiece::Queen:
+        case Piece::Queen:
             addFlag(Diagonal);
             addFlag(Perpendicular);
             range.x      =   -1;
             range.y      =   -1;
             break;
-        case GamePiece::Knight:
+        case Piece::Knight:
             addFlag(Knight);
             ignoreCollisions = true;
             range.y      =   2;
@@ -77,7 +76,7 @@ void MoveData::setMoveType(int type){
     m_type = type;
 
     if(isAttackMove()){
-        if(pieceType == GamePiece::Pawn){
+        if(pieceType == Piece::Pawn){
             flags.clear();
             addFlag(Diagonal);
 
@@ -85,7 +84,7 @@ void MoveData::setMoveType(int type){
             range.y = 1;
         }
     }else if(isDefaultMove()){
-        if(pieceType == GamePiece::Pawn){
+        if(pieceType == Piece::Pawn){
             flags.clear();
             addFlag(Perpendicular);
             range.x = 0;
@@ -163,10 +162,10 @@ bool MoveData::hasFlag(int flag){
     return void;
 *******************************************/
 void MoveData::_orient(){
-    if(toCell.x != NIL && fromCell.x != NIL){
+    if(toSquare.x != NIL && fromSquare.x != NIL){
 
-        orientation.x = ((toCell.x - fromCell.x) < 0) ? -1 : 1;
-        orientation.y = ((toCell.y - fromCell.y) < 0) ? -1 : 1;
+        orientation.x = ((toSquare.x - fromSquare.x) < 0) ? -1 : 1;
+        orientation.y = ((toSquare.y - fromSquare.y) < 0) ? -1 : 1;
 
     }
 }
@@ -177,7 +176,7 @@ void MoveData::_orient(){
     return void;
 *******************************************/
 void MoveData::_direction(){
-    if(toCell.x == NIL || fromCell.x == NIL || orientation.x == NIL || distance.x == -1) return;
+    if(toSquare.x == NIL || fromSquare.x == NIL || orientation.x == NIL || distance.x == -1) return;
 
     if(distance.x == distance.y){
         direction = Diagonal;
@@ -202,7 +201,7 @@ void MoveData::_direction(){
             FALSE if any data is NULL
 *******************************************/
 bool MoveData::isValid(){
-    if(orientation.x == NIL || toCell.x == NIL || fromCell.x == NIL || distance.x == -1 || direction == NIL){
+    if(orientation.x == NIL || toSquare.x == NIL || fromSquare.x == NIL || distance.x == -1 || direction == NIL){
         return false;
     }
 
@@ -217,31 +216,31 @@ bool MoveData::isValid(){
 void MoveData::validate(){
     if(isValid()) return;
 
-    if(toCell.x == NIL) return;
-    if(!Board::Get()->cellIsInBounds(toCell)) return;
+    if(toSquare.x == NIL) return;
+    if(!Board::Get()->CheckGridBounds(toSquare)) return;
 
     _orient();
     _distance();
     _direction();
 
-    if(Board::Get()->getCell(toCell.x, toCell.y).occupied){
-        if(!Player::Active()->ownsPiece(Board::Get()->getCell(toCell.x, toCell.y).getPieceInCell())){
+    if(Board::Get()->GetSquare(toSquare)->Occupied()){
+        if(!Player::Active()->OwnsPiece(Board::Get()->GetSquare(toSquare)->GetPiece())){
             setMoveType(ATTACK);
         }
     }
 }
 
 /*********************************************
-    "Record the distance between two cells"
+    "Record the distance between two Squares"
 
     return void;
 *******************************************/
 void MoveData::_distance(){
-    if(toCell.x == NIL || fromCell.x == NIL) return;
+    if(toSquare.x == NIL || fromSquare.x == NIL) return;
     if(orientation.x == NIL) return;
 
-    distance.x = (toCell.x - fromCell.x)*orientation.x;
-    distance.y = (toCell.y - fromCell.y)*orientation.y;
+    distance.x = (toSquare.x - fromSquare.x)*orientation.x;
+    distance.y = (toSquare.y - fromSquare.y)*orientation.y;
 }
 
 /*******************************************************
@@ -257,12 +256,12 @@ bool MoveData::isPossible(){
     validate();
 
     if(!isValid()){
-        if(outputDebugMessages) { std::cout << "Can not move piece " << pieceIndex << " (Type: " << pieceType << ") move from (" << fromCell.x << ", " << fromCell.y << ") to (" << toCell.x << ", " << toCell.y << ").\n\tMove data is not complete\n"; }
+        if(outputDebugMessages) { std::cout << "Can not move piece " << pieceIndex << " (Type: " << pieceType << ") move from (" << fromSquare.x << ", " << fromSquare.y << ") to (" << toSquare.x << ", " << toSquare.y << ").\n\tMove data is not complete\n"; }
 
         return false; }
 
     if(direction == IMPOSSIBLE) {
-        if(outputDebugMessages) { std::cout << "Can not move piece " << pieceIndex << " (Type: " << pieceType << ") move from (" << fromCell.x << ", " << fromCell.y << ") to (" << toCell.x << ", " << toCell.y << ").\n\tMove impossible.\n"; }
+        if(outputDebugMessages) { std::cout << "Can not move piece " << pieceIndex << " (Type: " << pieceType << ") move from (" << fromSquare.x << ", " << fromSquare.y << ") to (" << toSquare.x << ", " << toSquare.y << ").\n\tMove impossible.\n"; }
         return false;}
 
     if(hasFlag(direction)){
@@ -294,17 +293,17 @@ bool MoveData::isPossible(){
 **************************************************************/
 bool MoveData::checkPath(){
     int collisionFlag = COLLISION_NONE;
-    int checkX = fromCell.x;
-    int checkY = fromCell.y;
+    int checkX = fromSquare.x;
+    int checkY = fromSquare.y;
 
     if(ignoreCollisions){
-        if(Board::Get()->getCell(toCell.x, toCell.y).occupied){
-            if(Player::Active()->ownsPiece(Board::Get()->getCell(toCell.x, toCell.y).getPieceInCell())){
+        if(Board::Get()->GetSquare(toSquare)->Occupied()){
+            if(Player::Active()->OwnsPiece(Board::Get()->GetSquare(toSquare)->GetPiece())){
                 collisionFlag = COLLISION_FRIENDLY;
             }else{
                 collisionFlag = COLLISION_ENEMY;
-                checkX = toCell.x;
-                checkY = toCell.y;
+                checkX = toSquare.x;
+                checkY = toSquare.y;
             }
         }
     }else{
@@ -320,17 +319,17 @@ bool MoveData::checkPath(){
                 }
             }
 
-            Cell checkCell = Board::Get()->getCell(checkX, checkY);
+            Square* checkSquare = Board::Get()->GetSquare(sf::Vector2i(checkX, checkY));
 
-            if(checkCell.occupied){
-                if(Player::Active()->ownsPiece(checkCell.getPieceInCell())){
+            if(checkSquare->Occupied()){
+                if(Player::Active()->OwnsPiece(checkSquare->GetPiece())){
                     collisionFlag = COLLISION_FRIENDLY;
                 }else{
                     collisionFlag = COLLISION_ENEMY;
                 }
             }
 
-            if(checkX == toCell.x && checkY == toCell.y){
+            if(checkX == toSquare.x && checkY == toSquare.y){
                 break;
             }
         }
@@ -346,7 +345,7 @@ bool MoveData::checkPath(){
             //std::cout << "Friendly collision, path not found\n";
             return false;
         }else{
-            if(checkX != toCell.x || checkY != toCell.y){
+            if(checkX != toSquare.x || checkY != toSquare.y){
                // std::cout << "Enemy collision, path not found\n";
                 return false;
             }else{
@@ -357,20 +356,20 @@ bool MoveData::checkPath(){
 }
 
 /*************************************************************
-    "Checks to see if toCell is within our range"
+    "Checks to see if toSquare is within our range"
 
     return  bool
 **************************************************************/
 bool MoveData::checkRange(){
 
-    if(pieceType == GamePiece::Knight){
+    if(pieceType == Piece::Knight){
         if(((distance.x == 2) && (distance.y != 1)) || ((distance.x == 1) && (distance.y != 2))){
             if(outputDebugMessages) { std::cout << "Knight movement is out of range\n"; }
             return false;
         }
     }else{
-        if(pieceType == GamePiece::Pawn){
-            if(Board::Get()->getGamePiece(pieceIndex).hasMoved){
+        if(pieceType == Piece::Pawn){
+            if(Board::Get()->GetPiece(pieceIndex)->hasMoved){
                 range.y = 1;
             }else{
                 range.y = 2;
@@ -397,7 +396,7 @@ bool MoveData::checkRange(){
 
 bool MoveData::operator==(MoveData checkAgainst){
     if(isValid() && checkAgainst.isValid()){
-        if(fromCell == checkAgainst.fromCell && toCell == checkAgainst.toCell){
+        if(fromSquare == checkAgainst.fromSquare && toSquare == checkAgainst.toSquare){
             return true;
         }
     }

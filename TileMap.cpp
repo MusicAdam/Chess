@@ -1,13 +1,14 @@
 #include "TileMap.h"
 #include "Board.h"
 #include "RenderHandler.h"
-#include "Cell.h"
+#include "Square.h"
+#include <sstream>
 
-TileMap::TileMap(int cellCount, int cellSize)
+TileMap::TileMap(int SquareCount, int SquareSize)
 {
-    m_cellCount      = cellCount;
-    m_cellSize       = cellSize;
-    m_size           = m_cellCount*m_cellSize;
+    m_SquareCount      = SquareCount;
+    m_SquareSize       = SquareSize;
+    m_size           = m_SquareCount*m_SquareSize;
 
     m_clickCoord = sf::Vector2i(-1, -1);
 }
@@ -18,19 +19,24 @@ TileMap::~TileMap()
 }
 
 void TileMap::load(){
-    sf::Vector2f cellPos;
+    sf::Vector2f SquarePos;
 
-        //Set up cell array
-    for(int x=0; x<m_cellCount; x++){
-        for(int y=0; y<m_cellCount; y++){
-            cellPos = getCellPosition(sf::Vector2i(x, y));
-            cells[x][y].setGridPos(x, y);
-            cells[x][y].setSize(m_cellSize, m_cellSize);
-            cells[x][y].SetX(cellPos.x);
-            cells[x][y].SetY(cellPos.y);
-            cells[x][y].setToBoardColor();
+    int counter = 0;
+        //Set up Square array
+    for(int x=0; x<m_SquareCount; x++){
+        for(int y=0; y<m_SquareCount; y++){
+            Squares[x][y] = new Square();
+            SquarePos = getSquarePosition(sf::Vector2i(x, y));
+            Squares[x][y]->setGridPos(x, y);
+            Squares[x][y]->SetSize(m_SquareSize, m_SquareSize);
+            Squares[x][y]->SetX(SquarePos.x);
+            Squares[x][y]->SetY(SquarePos.y);
+            Squares[x][y]->setToBoardColor();
 
-            RenderHandler::Get()->addComponent(cells[x][y], 3);
+            RenderHandler::Get()->addComponent(*Squares[x][y], 3);
+            counter++;
+
+            std::cout << counter << std::endl;
         }
     }
 }
@@ -40,58 +46,69 @@ void TileMap::SetPosition(float x, float y){
     m_y = y;
 }
 
-sf::Vector2f TileMap::getCellPosition(sf::Vector2i coords){
-    return sf::Vector2f(((coords.x*m_cellSize)+m_x), ((coords.y*m_cellSize)+m_y));
+sf::Vector2f TileMap::getSquarePosition(sf::Vector2i coords){
+    return sf::Vector2f(((coords.x*m_SquareSize)+m_x), ((coords.y*m_SquareSize)+m_y));
 }
 
 int TileMap::MapSize(){
     return m_size;
 }
 
-Cell& TileMap::GetCell(sf::Vector2i coord) throw(TMapException){
-    std::string error;
+Square* TileMap::GetSquare(sf::Vector2i coord) throw(TMapException){
+    std::stringstream   error_stream;
 
     if(CheckGridBounds(coord)){
-        if(cells.find(coord.x) != cells.end()){
-            if(cells[coord.x].find(coord.y) != cells[coord.x].end()){
-                return cells[coord.x][coord.y];
+        if(Squares.find(coord.x) != Squares.end()){
+            if(Squares[coord.x].find(coord.y) != Squares[coord.x].end()){
+                return Squares[coord.x][coord.y];
             }else{
-                error = "Y Coordinate does not exist";
+                error_stream << "Y coordinate ";
+                error_stream << coord.y;
+                error_stream << " does not exist";
             }
         }else{
-            error = "X coordinate does not exist";
+            error_stream << "X coordinate ";
+            error_stream << coord.x;
+            error_stream << " does not exist";
         }
     }else{
-        error = "Coordinates are out of bounds";
+        error_stream << "Coordinate ";
+        error_stream << coord.x;
+        error_stream << ", ";
+        error_stream << coord.y;
+        error_stream << " is out of bounds";
     }
+
     TMapException newE;
     newE.c = coord;
-    newE.type = TMapException::NULL_CELL;
-    newE.why = error;
+    newE.type = TMapException::NULL_SQUARE;
+    newE.why = error_stream.str();
     throw newE;
 }
 
-Cell& TileMap::GetSelection() throw(TMapException){
+Square* TileMap::GetSelection() throw(TMapException){
     TMapException newError;
 
     if(m_clickCoord.x != -1 && m_clickCoord.y != -1){
         try{
-            Cell returnCell = GetCell(m_clickCoord);
-            return returnCell;
+            Square* returnSquare = GetSquare(m_clickCoord);
+            return returnSquare;
         }
+
         catch(TMapException e){
             newError.why = e.why;
+            newError.type = e.type;
         }
     }else{
         newError.type = TMapException::NO_SELECTION;
-        newError.why = "No cell is selected";
+        newError.why = "No Square is selected";
     }
 
     throw newError;
 }
 
 bool TileMap::CheckGridBounds(sf::Vector2i coord){
-    if((coord.x >= 0 && coord.x < m_cellCount) && (coord.y >= 0 && coord.y < m_cellCount))
+    if((coord.x >= 0 && coord.x < m_SquareCount) && (coord.y >= 0 && coord.y < m_SquareCount))
         return true;
 
     return false;
@@ -105,36 +122,31 @@ bool TileMap::CheckPixelBounds(sf::Vector2f coord){
 }
 
 sf::Vector2i TileMap::GetGridFromPixel(sf::Vector2f coord){
-    int x = (coord.x - ((RenderHandler::Window()->GetWidth()/2)-(MapSize()/2)))/m_cellSize;
-    int y = (coord.y - ((RenderHandler::Window()->GetHeight()/2)-(MapSize()/2)))/m_cellSize;
+    int x = (coord.x - ((RenderHandler::Window()->GetWidth()/2)-(MapSize()/2)))/m_SquareSize;
+    int y = (coord.y - ((RenderHandler::Window()->GetHeight()/2)-(MapSize()/2)))/m_SquareSize;
 
     return sf::Vector2i(x, y);
 }
 
 bool TileMap::Click(sf::Vector2f mCoord){
-    if(CheckPixelBounds(mCoord)){
-        try{
-            Cell& clickedCell = GetCell(GetGridFromPixel(mCoord));
+    try{
+        Square* clickedSquare = GetSquare(GetGridFromPixel(mCoord));
 
-            if(clickedCell.gridPos == m_clickCoord){
+        if(clickedSquare->gridPos == m_clickCoord){
+            Deselect();
+        }else{
+            if(!clickedSquare->clicked){
                 Deselect();
-            }else{
-                if(!clickedCell.clicked){
-                    Deselect();
-                    clickedCell.click();
-                    Select(clickedCell.gridPos);
-                }
+                clickedSquare->click();
+                Select(clickedSquare->gridPos);
             }
         }
+    }
 
-        catch(TMapException e){
-            if(e.type == TMapException::NULL_CELL){
-                std::cout << "GetCell("<< e.c.x <<", " << e.c.y << "):> FAILED: " << e.why << "\n";
-            }
+    catch(TMapException e){
+        if(e.type == TMapException::NULL_SQUARE){
+            std::cout << "Click("<< mCoord.x <<", " << mCoord.y << "):> FAILED: " << e.why << "\n";
         }
-
-    }else{
-        std::cout << "Click is out of bounds!\n";
     }
 
     return true;
@@ -147,32 +159,38 @@ void TileMap::Select(sf::Vector2i c){
 
     m_clickCoord.x = c.x;
     m_clickCoord.y = c.y;
+
+    std::cout << "Square " << c.x << ", " << c.y << " has been selected\n";
 }
 
 void TileMap::Deselect() throw(){
     if(!CheckGridBounds(m_clickCoord)) return;
 
     try{
-        GetCell(m_clickCoord).click();
+        int tmpx = m_clickCoord.x;
+        int tmpy = m_clickCoord.y;
+
+        GetSquare(m_clickCoord)->click();
+        m_clickCoord.x = -1;
+        m_clickCoord.y = -1;
+
+        std::cout << "Square " << tmpx << ", " << tmpy << " has been deselected\n";
     }
 
     catch(...){
-        std::cout << "Cannot deselect cell: The selected cell does not exist!\n";
+        std::cout << "Cannot deselect Square: The selected Square does not exist!\n";
     }
-
-    m_clickCoord.x = -1;
-    m_clickCoord.y = -1;
 }
 
 void TileMap::unload(){
-    Cell* tmpCell;
+    Square* tmpSquare;
 
-    for(int x=0; x<m_cellCount; x++){
-        for(int y=0; y<m_cellCount; y++){
-            tmpCell = &cells[x][y];
-            RenderHandler::Get()->removeComponent(tmpCell);
+    for(int x=0; x<m_SquareCount; x++){
+        for(int y=0; y<m_SquareCount; y++){
+            tmpSquare = Squares[x][y];
+            RenderHandler::Get()->removeComponent(tmpSquare);
         }
     }
 
-    cells.clear();
+    Squares.clear();
 }

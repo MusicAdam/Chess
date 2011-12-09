@@ -5,12 +5,12 @@
 #include <string>
 
 #include "Event.h"
-#include "Cell.h"
+#include "Square.h"
 #include "Rules.h"
 #include "RenderHandler.h"
 #include "TileMap.h"
 
-class GamePiece;
+class Piece;
 
 class Board : public TileMap
 {
@@ -35,44 +35,36 @@ class Board : public TileMap
             STATE_EXIT
         };
 
-        struct Exception{
-            const int Move  =   0;
-        };
-
         ~Board();
 
 
         bool Click(sf::Vector2f mCoord);
-        GamePiece getGamePiece(int i);
-
-        void placePieceInCell(int index, sf::Vector2i cell);
-        void removePieceFromCell(sf::Vector2i cell);
-
-        bool canMovePiece(int pieceIndex, int clickedCellX, int clickedCellY, int moveType); //0 is movement, 1 is attack
-        void jumpWithSelectedPiece(int x, int y);
-        void selectCell(int x, int y);
+        Piece* GetPiece(int i);
 
         void setState(const int nstate);
         const int getState();
 
-        void moveSelectedPieceTo(int x, int y);
-
-        void performAction(Cell& clickedCell);
+        void performAction(Square* clickedSquare);
 
         int ActivePlayer();
 
+        void DebugClick(sf::Vector2f mCoord);
+        void DebugPreviousSelection(sf::Vector2f mCoord);
+
         //Loads the board
         bool load();
+        void unload();
 
         void think();
 
         bool IsLoaded();
+        void Deselect();
 
 void outputClickData(int mouseX, int mouseY);
 
         void spacePressed();
-        void highlightCell(int x, int y, bool moveType);
-        void hideCellHighlight(int x, int y);
+        void highlightSquare(int x, int y, bool moveType);
+        void hideSquareHighlight(int x, int y);
 
         void killPiece(int index);
 
@@ -83,27 +75,27 @@ void outputClickData(int mouseX, int mouseY);
         float Y;
         int height;
         int width;
-        sf::Vector2i selectedCell;
+        sf::Vector2i selectedSquare;
     protected:
         Board();
     private:
 
         static Board* BoardPtr;
 
-        //Removes all pieces and cells
+        //Removes all pieces and Squares
         //void unload();
         //Deletes the board
         void exit();
         //Initialize the pieces array
         void createPieces();
-        //Initialize cells array
-        //void createCells();
+        //Initialize Squares array
+        //void createSquares();
         void turn();
 
-        GamePiece pieces[32];
-        float screenWidth ;
+        Piece pieces[32];
+        float screenWidth;
         float screenHeight;
-        int m_selectedPiece;
+        Piece* m_selectedPiece;
         int m_clickedPiece;
         int m_state;
         int m_activePlayer; //The player id whose turn it is

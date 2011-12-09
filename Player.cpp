@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "Board.h"
+#include "Piece.h"
 
 Player* Player::p1ptr	=	NULL;
 Player* Player::p2ptr	=	NULL;
@@ -22,7 +23,7 @@ Player::~Player()
 }
 
 
-static Player* Player::One(){
+Player* Player::One(){
 	if(p1ptr == NULL){
 		p1ptr = new Player(1);
 	}
@@ -30,7 +31,7 @@ static Player* Player::One(){
 	return p1ptr;
 }
 
-static Player* Player::Two(){
+Player* Player::Two(){
 	if(p2ptr == NULL){
 		p2ptr = new Player(2);
 	}
@@ -38,7 +39,7 @@ static Player* Player::Two(){
 	return p2ptr;
 }
 
-static void Player::clean(){
+void Player::clean(){
     p1ptr   =   NULL;
     p2ptr   =   NULL;
 }
@@ -81,15 +82,16 @@ bool Player::isAI(){
     return false;
 }
 
-bool Player::ownsPiece(int index){
-    GamePiece p = Board::Get()->getGamePiece(index);
-   // std::cout << "Owns piece: "
-    if(Player::Active()->id() == p.Owner()->id()){
-
+bool Player::OwnsPiece(Piece* piece){
+    if(Player::Active()->id() == piece->Owner()->id()){
         return true;
     }
 
     return false;
+}
+
+bool Player::OwnsPiece(int index){
+    return OwnsPiece(Board::Get()->GetPiece(index));
 }
 
 Player* Player::Active()

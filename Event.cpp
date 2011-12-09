@@ -115,6 +115,10 @@ void Event::Handler::listen(){
                     Board->setState(Board::STATE_EXIT);
                 }
             }
+
+            if(Event.Key.Code == sf::Key::P){
+                Board->DebugPreviousSelection(sf::Vector2f(Input.GetMouseX(), Input.GetMouseY()));
+            }
         }
 
         // Close window : exit)
@@ -129,7 +133,8 @@ void Event::Handler::listen(){
                 }
 
                 if(Event.MouseButton.Button == sf::Mouse::Right){
-                    Board->outputClickData(Input.GetMouseX(), Input.GetMouseY());
+                    //Board->outputClickData(Input.GetMouseX(), Input.GetMouseY());
+                    Board->DebugClick(sf::Vector2f(Input.GetMouseX(), Input.GetMouseY()));
                 }
             }
         }

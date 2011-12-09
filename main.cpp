@@ -37,6 +37,7 @@ int main()
 
 
         Board::Get()->think();
+        //RenderHandler->Think
     }
 
 

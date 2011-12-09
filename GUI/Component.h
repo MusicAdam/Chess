@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "../State.h"
 
 class Component: public sf::Shape
 {
@@ -13,15 +14,16 @@ class Component: public sf::Shape
 
         void draw();
 
-        void setSize(float w, float h);
-        void setSize(sf::Vector2f size);
+        void SetSize(float w, float h);
+        void SetSize(sf::Vector2f size);
 
-        void setColor(sf::Color newColor);
-        sf::Color getColor();
-        void setOutlineColor(sf::Color newColor);
-        sf::Color getOutlineColor();
-        float getWidth();
-        float getHeight();
+        void SetColor(sf::Color newColor);
+        sf::Color GetOutlineColor();
+        void SetOutlineColor(sf::Color newColor);
+
+        float           GetWidth();
+        float           GetHeight();
+        sf::Vector2f    GetSize();
         void performLayout();
 
         bool isValid();
@@ -41,6 +43,8 @@ class Component: public sf::Shape
         sf::Color m_componentColor;
         sf::Color m_outlineColor;
         sf::Shape m_background;
+
+        void think(State::type parentState);
 
 };
 

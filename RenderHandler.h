@@ -42,7 +42,6 @@ class RenderHandler
         bool isValid();
         //Force the board to redraw
         void invalidate();
-        void validate();
 
         void test();
 
@@ -63,6 +62,7 @@ class RenderHandler
         renderComponents* scrollRenderSprites(); //Scrolls to Sprite
         //Returns the number of objects in the list
         int getRenderListSize();
+        void validate();
 
         void _setComponentDepth(renderComponents* stackPointer, int ndepth);
         void setDepthHighLow(int nd);

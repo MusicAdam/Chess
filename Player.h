@@ -2,7 +2,7 @@
 #define PLAYER_H
 
 #include <iostream>
-
+class Piece;
 class Player
 {
 	public:
@@ -31,7 +31,8 @@ class Player
 		//State identifiers
 		bool isHuman();
 		bool isAI();
-		bool ownsPiece(int index);
+		bool OwnsPiece(int index);
+		bool OwnsPiece(Piece* piece);
 
         /* DELETE? */
 		bool valid();

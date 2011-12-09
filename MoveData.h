@@ -6,11 +6,11 @@
 #include <iostream>
 
 using namespace std;
+class Square;
+class Piece;
 
-class Cell;
-class GamePiece;
 
-//TODO: Move checkPath (rename to FindPath) to the board class. This class should not deal with cell data.
+//TODO: Move checkPath (rename to FindPath) to the board class. This class should not deal with Square data.
 
 class MoveData
 {
@@ -35,7 +35,7 @@ class MoveData
         };
 
 
-        MoveData(GamePiece& Piece);
+        MoveData(Piece& piece_ref);
         MoveData();
         MoveData(int ptype, int pindex);
 
@@ -65,14 +65,14 @@ class MoveData
         sf::Vector2i range;     //total x, y distance that can be moved
         sf::Vector2i orientation; //x & y orientation
 
-        sf::Vector2i fromCell;
-        sf::Vector2i toCell;
+        sf::Vector2i fromSquare;
+        sf::Vector2i toSquare;
     private:
         void _orient();
         void _distance();
         void _direction();
 
-        bool checkPath(); //Check that a path between the two cells is possible
+        bool checkPath(); //Check that a path between the two Squares is possible
         bool checkRange();
 
 

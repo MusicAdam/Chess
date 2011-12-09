@@ -1,6 +1,6 @@
 #include "AI.h"
 #include "Board.h"
-#include "GamePiece.h"
+#include "Piece.h"
 #include "MoveData.h"
 #include "AIMove.h"
 
@@ -19,7 +19,7 @@ AI::~AI()
 }
 
 
-static AI* AI::Get(){
+AI* AI::Get(){
     if(aiPtr == NULL){
         aiPtr = new AI();
     }
@@ -27,7 +27,7 @@ static AI* AI::Get(){
     return aiPtr;
 }
 
-static void AI::clean(){
+void AI::clean(){
     aiPtr = NULL;
 }
 
@@ -37,7 +37,7 @@ void AI::dbg_wait(){
     //std::cin;
 }
 
-static void AI::GetMove(){
+void AI::GetMove(){
 
     AI* ai = Get();
     //int = piece index
@@ -46,14 +46,14 @@ static void AI::GetMove(){
 
     //Get all moves
     for(int index=0; index<32; index++){
-        if(!Board::Get()->getGamePiece(index).isAwake()){
-            Board::Get()->getGamePiece(index).wake();
+        if(!Board::Get()->GetPiece(index)->isAwake()){
+            Board::Get()->GetPiece(index)->wake();
         }
 
-        if(Player::Active()->ownsPiece(index)){
-            ai->FriendlyMoves.push_back(Board::Get()->getGamePiece(index).PossibleMoves);
+        if(Player::Active()->OwnsPiece(index)){
+            ai->FriendlyMoves.push_back(Board::Get()->GetPiece(index)->PossibleMoves);
         }else{
-            ai->EnemyMoves.push_back(Board::Get()->getGamePiece(index).PossibleMoves);
+            ai->EnemyMoves.push_back(Board::Get()->GetPiece(index)->PossibleMoves);
         }
     }
 
@@ -64,10 +64,8 @@ static void AI::GetMove(){
     multimap<int, AIMove> SortedMoves;
 
 
-    int pieceIndex;
     MoveData pieceMoveData;
     vector<MoveData>::iterator PieceMoves_it;
-    int counter = 0;
 
     for(ai->Move_it = ai->FriendlyMoves.begin(); ai->Move_it != ai->FriendlyMoves.end(); ++ai->Move_it){
         for(PieceMoves_it=(*ai->Move_it).begin(); PieceMoves_it < (*ai->Move_it).end(); PieceMoves_it++){
