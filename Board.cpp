@@ -12,7 +12,7 @@ Board::Board() : TileMap(8, 60)
 {
     m_isLoaded  =   false;
     setState(Board::STATE_NULL);
-    m_activePlayer  =   NULL;
+    m_activePlayer  =   1;
     m_actionPerformed = false;
     m_selectedPiece = NULL;
 
@@ -64,16 +64,17 @@ void Board::DebugClick(sf::Vector2f mCoord){
         std::cout << "************Click Data**********\n";
         std::cout << "Square:\t\t" << clickedSquare->gridPos.x << ", " << clickedSquare->gridPos.y << std::endl;
         if(clickedSquare->Occupied()){
-            std::cout << "Occupied:\t" << clickedSquare->GetPiece()->index << std::endl;
+            std::cout << "Square points to:\t" << clickedSquare->GetPiece()->index << std::endl;
         }else{
-            std::cout << "Occupied:\tfalse\n";
+            std::cout << "Square points to:\tNULL\n";
         }
 
         if(GetPiece(clickedSquare->GetPiece()->index)->GetSquare() == NULL){
-            std::cout << "Piece points to cell: NULL\n";
+            std::cout << "Piece points to square:\tNULL\n";
         }else{
             Square* sq = GetPiece(clickedSquare->GetPiece()->index)->GetSquare();
-            std::cout << "Piece points to cell: " << sq->gridPos.x << ", " << sq->gridPos.y << std::endl;
+            std::cout << "Piece in square:\t" << clickedSquare->GetPiece()->index << std::endl;
+            std::cout << "Piece points to square:\t" << sq->gridPos.x << ", " << sq->gridPos.y << std::endl;
         }
     }
     catch(ChessException e){
@@ -85,6 +86,8 @@ void Board::DebugClick(sf::Vector2f mCoord){
 }
 
 void Board::DebugPreviousSelection(sf::Vector2f mCoord){
+    std::cout << "********************************\n";
+    std::cout << "************ Pointers **********\n";
     if(m_selectedPiece == NULL){
         std::cout << "m_selectedPiece = NULL\n";
     }else{
@@ -391,21 +394,11 @@ void Board::turn(){
         }
     }
 
-    setState(Board::STATE_TURN);
-
     std::cout << "Active player is " << m_activePlayer << ", Player::Active() returns " << Player::Active()->id() << std::endl;
 }
 
 void Board::think(){
     if(getState() == STATE_NULL || getState() == STATE_PAUSE) return;
-
-    if(getState() == STATE_PLAY || getState() == STATE_TURN){
-        for(int i=0;i<32;i++){
-            if(pieces[i].isAlive() || pieces[i].isIdle()){
-                pieces[i].think();
-            }
-        }
-    }
 
     //Board is loading.
     switch(getState())
@@ -419,7 +412,7 @@ void Board::think(){
             }*/
 
             if(m_isLoaded && BoardPtr != NULL){
-                turn();
+                setState(STATE_PLAY);
                 RenderHandler::Get()->invalidate();
             }else{
                 //construct (Lazy initialize) & load
@@ -441,12 +434,20 @@ void Board::think(){
                 m_selectedPiece = NULL;
                 m_actionPerformed = false;
 
-                turn();
+                setState(STATE_TURN);
             }
             break;
 
         case STATE_TURN:
-            setState(STATE_PLAY);
+            try {
+                turn();
+                setState(STATE_PLAY);
+            }
+
+            catch(...){
+                std::cout << "Unknown exception encountered, can not switch turn\n";
+            }
+
             break;
 
         case STATE_EXIT:
@@ -462,6 +463,14 @@ void Board::think(){
             RenderHandler::Get()->invalidate();
             break;
 
+    }
+
+    if(getState() == STATE_PLAY || getState() == STATE_TURN){
+        for(int i=0;i<32;i++){
+            if(pieces[i].isAlive() || pieces[i].isIdle()){
+                pieces[i].think();
+            }
+        }
     }
 
 }

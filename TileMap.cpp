@@ -20,8 +20,6 @@ TileMap::~TileMap()
 
 void TileMap::load(){
     sf::Vector2f SquarePos;
-
-    int counter = 0;
         //Set up Square array
     for(int x=0; x<m_SquareCount; x++){
         for(int y=0; y<m_SquareCount; y++){
@@ -34,9 +32,6 @@ void TileMap::load(){
             Squares[x][y]->setToBoardColor();
 
             RenderHandler::Get()->addComponent(*Squares[x][y], 3);
-            counter++;
-
-            std::cout << counter << std::endl;
         }
     }
 }

@@ -123,6 +123,8 @@ bool Piece::Move(MoveData MoveData){
     }
 
     if(MoveData.isAttackMove()){
+        std::cout << index << "(Player: " << Owner()->id() << ") is jumping " << Board::Get()->GetSquare(MoveData.toSquare)->GetPiece()->index << " (Player: " << Board::Get()->GetSquare(MoveData.toSquare)->GetPiece()->Owner()->id() << ")\n";
+        Board::Get()->GetSquare(MoveData.toSquare)->GetPiece()->SetPosition(0, 0);
         Board::Get()->GetSquare(MoveData.toSquare)->GetPiece()->kill();
         Board::Get()->GetSquare(MoveData.toSquare)->Empty();
     }
@@ -450,9 +452,9 @@ bool Piece::isAwake(){
 
 bool Piece::isIdle(){
     if(GetState() == STATE_IDLE)
-        return false;
+        return true;
 
-    return true;
+    return false;
 }
 
 //Clear possible moves

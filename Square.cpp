@@ -50,10 +50,12 @@ sf::Vector2f Square::GetCenter(){
 }
 
 void Square::PlacePiece(Piece* piece){
+    std::cout << "Place piece " << piece->index << " in square " << gridPos.x << ", " << gridPos.y << std::endl;
     m_currentPiece  = piece;
 }
 
 void Square::Empty(){
+    std::cout << "Removing piece " << GetPiece()->index << " from square " << gridPos.x << ", " << gridPos.y << std::endl;
     m_currentPiece  = NULL;
 }
 

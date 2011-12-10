@@ -7,7 +7,7 @@
 	"Board.h"
 	"Player.h"
 
-1323396583 source:c:\projects\sfml3\board.cpp
+1323476510 source:c:\projects\sfml3\board.cpp
 	"Board.h"
 	"Piece.h"
 	"RenderHandler.h"
@@ -309,7 +309,7 @@
 
 1322336397 c:\projects\sfml3\movemodel.h
 
-1323381717 source:c:\projects\sfml3\tilemap.cpp
+1323396597 source:c:\projects\sfml3\tilemap.cpp
 	"TileMap.h"
 	"Board.h"
 	"RenderHandler.h"
@@ -321,7 +321,7 @@
 	<map>
 	<string>
 
-1323396325 c:\projects\sfml3\square.h
+1323396820 c:\projects\sfml3\square.h
 	<SFML/Graphics.hpp>
 	"GUI/Component.h"
 	"ChessException.h"
@@ -337,12 +337,12 @@
 1323395323 c:\projects\sfml3\state.h
 	<string>
 
-1323395928 source:c:\projects\sfml3\piece.cpp
+1323472838 source:c:\projects\sfml3\piece.cpp
 	"Piece.h"
 	"Board.h"
 	"Square.h"
 
-1323396300 source:c:\projects\sfml3\square.cpp
+1323476043 source:c:\projects\sfml3\square.cpp
 	"Square.h"
 	<SFML/Graphics.hpp>
 	<iostream>
